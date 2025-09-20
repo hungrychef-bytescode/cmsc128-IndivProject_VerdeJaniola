@@ -1,12 +1,110 @@
-#task-list{
-    list-style-type: none;
-    padding:0;
-    margin:0;
+body {
+  font-family: "Comic Sans MS", "Brush Script MT", cursive;
 }
-
-
-#task-list li{
-    display: block;
-    padding:0;
-    margin:0;
+h1{ /*TO DO LIST*/
+    color: BLACK; 
+    font-size: 40px;
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 45px;
+    margin-left: 175px;
+    position: relative; 
+    top: 30px;  
+} 
+h2{ /*name*/
+    color: rgb(48, 44, 44);
+    font-size: 20px;
+    font-style: italic;
+    margin-left: 185px;
+} 
+h3{ /*subject*/
+    color: rgb(48, 44, 44);
+    font-size: 20px;
+    font-style: italic;
+    margin-top: -43px;
+    margin-left: 850px;
+} 
+.iloveu {
+  position: relative; 
+  top: -220px;   
+  left: 160px;  
+  width: 75px;
+  height: 75px;
+  transform: rotate(-10deg);
+} 
+.goodjob {
+  position: relative; 
+  top: -170px;   
+  left: 930px;  
+  width: 105px;
+  height: 105px;
+  transform: rotate(25deg);
+}
+.cool {
+  position: relative; 
+  top: -160px;   
+  left: -25px;  
+  width: 125px;
+  height: 125px;
+  transform: rotate(-5deg);
+}
+.hellokitty {
+  position: relative; 
+  top: -175px;   
+  left: 740px;  
+  width: 75px;
+  height: 75px;
+  transform: rotate(-15deg);
+}
+.miaw {
+  position: relative; 
+  top: -130px;   
+  left: -310px;  
+  width: 80px;
+  height: 80px;
+  transform: rotate(-15deg);
+}
+.input-field input {
+  padding: 8px;
+  position: relative;
+  top: -125px;
+  left: 850px;
+  width: 240px;
+  height: 30px;
+  border: 2px solid #5f6061; 
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #000;       
+}
+.input-field button {
+  padding: 8px 12px;
+  position: relative;
+  top: -125px;
+  left: 830px;
+  width: 55px;
+  height: 50px;
+  border: 2px solid #5f6061;  
+  background-color: #e476a4;   
+  color: #ffffff;   
+  border-radius: 5px;
+  cursor: pointer;
+}
+.input-field button:hover {
+  background-color: #259e39;   
+}
+#task-list {
+  list-style-type: none;
+  padding: 0;
+}
+#task-list li {  
+  position: relative;
+  left: 200px;
+  top: -120px;
+  padding: 5px;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #000;         
+  font-weight: 500;
 }
