@@ -76,7 +76,7 @@ h3{ /*subject*/
   background-color: #ffffff;
   color: #000;       
 }
-.input-field button {
+#add-task-btn {
   padding: 8px 12px;
   position: relative;
   top: -125px;
@@ -89,7 +89,7 @@ h3{ /*subject*/
   border-radius: 5px;
   cursor: pointer;
 }
-.input-field button:hover {
+#add-task-btn:hover {
   background-color: #259e39;   
 }
 #task-list {
@@ -108,3 +108,18 @@ h3{ /*subject*/
   color: #000;         
   font-weight: 500;
 }
+
+/* #task-list li .button-container {
+    display: flex;
+    gap: 10px;
+} */
+
+/* Target the Edit and Delete buttons */
+/* #task-list li .button-container button {
+    padding: 5px 10px;
+    border: 2px solid #5f6061;
+    background-color: #e476a4;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+} */
