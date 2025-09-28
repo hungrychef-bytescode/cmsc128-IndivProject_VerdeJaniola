@@ -1,29 +1,37 @@
 body {
   font-family: "Comic Sans MS", "Brush Script MT", cursive;
+  margin: 0;
+  padding: 20px;
+  background-color: #f8f9fa;
 }
-h1{ /*TO DO LIST*/
-    color: BLACK; 
-    font-size: 40px;
-    font-weight: bold;
-    font-style: italic;
-    margin-top: 45px;
-    margin-left: 175px;
-    position: relative; 
-    top: 30px;  
+
+h1 {
+  color: BLACK; 
+  font-size: 40px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 22px;
+  margin-left: 175px;
+  position: relative; 
+  top: 30px;  
 } 
-h2{ /*name*/
-    color: rgb(48, 44, 44);
-    font-size: 20px;
-    font-style: italic;
-    margin-left: 185px;
+
+h2 {
+  color: rgb(48, 44, 44);
+  font-size: 20px;
+  font-style: italic;
+  margin-left: 185px;
 } 
-h3{ /*subject*/
-    color: rgb(48, 44, 44);
-    font-size: 20px;
-    font-style: italic;
-    margin-top: -43px;
-    margin-left: 850px;
+
+h3 {
+  color: rgb(48, 44, 44);
+  font-size: 20px;
+  font-style: italic;
+  margin-top: -43px;
+  margin-left: 850px;
 } 
+
+/* Sticker positioning */
 .iloveu {
   position: relative; 
   top: -220px;   
@@ -32,6 +40,7 @@ h3{ /*subject*/
   height: 75px;
   transform: rotate(-10deg);
 } 
+
 .goodjob {
   position: relative; 
   top: -170px;   
@@ -40,6 +49,7 @@ h3{ /*subject*/
   height: 105px;
   transform: rotate(25deg);
 }
+
 .cool {
   position: relative; 
   top: -160px;   
@@ -48,6 +58,7 @@ h3{ /*subject*/
   height: 125px;
   transform: rotate(-5deg);
 }
+
 .hellokitty {
   position: relative; 
   top: -175px;   
@@ -56,6 +67,7 @@ h3{ /*subject*/
   height: 75px;
   transform: rotate(-15deg);
 }
+
 .miaw {
   position: relative; 
   top: -130px;   
@@ -64,23 +76,36 @@ h3{ /*subject*/
   height: 80px;
   transform: rotate(-15deg);
 }
+
+/* Input field styling */
 .input-field input {
   padding: 8px;
   position: relative;
   top: -125px;
-  left: 850px;
-  width: 240px;
+  left: 687px;
+  width: 400px;
   height: 30px;
   border: 2px solid #5f6061; 
   border-radius: 5px;
   background-color: #ffffff;
-  color: #000;       
+  color: #000;
+  font-family: inherit;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+.input-field input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(228, 118, 164, 0.2);
+}
+
+/* Add button styling  */
 .input-field button {
   padding: 8px 12px;
   position: relative;
-  top: -125px;
-  left: 830px;
+  top: -126px;
+  left: 668px;
   width: 55px;
   height: 50px;
   border: 2px solid #5f6061;  
@@ -88,23 +113,180 @@ h3{ /*subject*/
   color: #ffffff;   
   border-radius: 5px;
   cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 14px;
 }
+
 .input-field button:hover {
   background-color: #259e39;   
 }
+
+/* Task list styling */
 #task-list {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
+
 #task-list li {  
   position: relative;
-  left: 200px;
-  top: -120px;
-  padding: 5px;
-  font-size: 20px;
+  left: 190px;
+  top: -103px;
+  margin-bottom: 11px;
+  font-size: 18px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 10px;
   color: #000;         
   font-weight: 500;
+  background-color: transparent;
+  max-width: 958px;
+  padding-right: 50px;
+}
+
+/* Task text */
+#task-list li span {
+  flex-grow: 1;
+  margin-right: 10px;
+  word-wrap: break-word;
+}
+
+/* Date and buttons container */
+#task-list li .task-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* Due date input styling */
+#task-list li input[type="datetime-local"] {
+  padding: 6px 8px;
+  border: 2px solid #ddf769;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #f7ffaa;
+  min-width: 180px;
+  height: 13px;
+  color: #a37bb3;
+}
+
+#task-list li input[type="datetime-local"]:focus {
+  outline: none;
+  border-color: #e476a4;
+  background-color: #fff;
+}
+
+/* Button styling for task actions */
+#task-list li button {
+  padding: 6px 12px;
+  border: 2px solid #5f6061;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 70px;
+  height: 28px;
+}
+
+/* Specific button colors */
+#task-list li button:nth-of-type(1) {
+  background-color: #a8d5a8;
+  border-color: #8fbc8f;
+}
+
+#task-list li button:nth-of-type(2) {
+  background-color: #deb4d6;
+  border-color: #c997c1;
+}
+
+#task-list li button:nth-of-type(3) {
+  background-color: #ffb3b3;
+  border-color: #ff9999;
+}
+
+/* Completed task styling */
+#task-list li.completed {
+  opacity: 0.8;
+}
+
+#task-list li.completed span {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+/* Enhanced cute toast styling - CENTERED */
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(20px);
+  background-color: #e476a4;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 15px;
+  font-family: "Comic Sans MS", "Brush Script MT", cursive;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(228, 118, 164, 0.3);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  border: 2px solid #fff;
+}
+        
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  h3 {
+    margin-left: 600px;
+  }
+  
+  .input-field input,
+  .input-field button {
+    left: 600px;
+  }
+  
+  .goodjob {
+    left: 680px;
+  }
+  
+  .hellokitty {
+    left: 540px;
+  }
+}
+
+@media (max-width: 900px) {
+  #task-list li {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    left: 50px;
+    max-width: calc(100% - 100px);
+  }
+  
+  #task-list li .task-actions {
+    margin-left: 0;
+  }
+  
+  #task-list li input[type="datetime-local"] {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  #task-list li button {
+    width: 100%;
+    margin: 2px 0;
+  }
+
+  .toast {
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    font-size: 13px;
+    padding: 10px 16px;
+  }
 }
