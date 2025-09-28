@@ -1,0 +1,11 @@
+instance/*
+!instance/.gitignore
+*.sqlite3
+*.db
+
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+.vscode/
+venv/
