@@ -1,8 +1,7 @@
-instance/*
+instance/*.sqlite3
+instance/*.db
 !instance/.gitignore
-*.sqlite3
-*.db
-
+!instance/.keep
 .env
 __pycache__/
 *.py[cod]
