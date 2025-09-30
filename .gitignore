@@ -1,8 +1,8 @@
-instance/*.sqlite3
-instance/*.db
-!instance/.gitignore
-!instance/.keep
+# ignore database
+task.db
+# ignore environment variables file
 .env
+# ignore Python cache files
 __pycache__/
 *.py[cod]
 *$py.class
