@@ -13,13 +13,13 @@ def read_sorted_tasks(sort_by="timestamp", order="asc"):
                     SELECT * FROM tasks
                     ORDER BY 
                         CASE priority
-                            WHEN 'High' THEN 1
-                            WHEN 'Medium' THEN 2
-                            WHEN 'Low' THEN 3
+                            WHEN "High" THEN 3
+                            WHEN "Medium" THEN 2
+                            WHEN "Low" THEN 1
                         END {dir}
                 """
             elif sort_by == "due_date":
-                query = f"SELECT * FROM tasks ORDER BY due_date {dir}"
+                query = f"SELECT * FROM tasks ORDER BY CASE WHEN due_date IS NULL THEN 1 ELSE 0 END, due_date {dir}"
             else:
                 query = f"SELECT * FROM tasks ORDER BY timestamp {dir}"
 

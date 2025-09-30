@@ -1,85 +1,53 @@
-<!DOCTYPE html>                                     <!-- tells browser how to interpret content (it's written in HTML 5)-->
-<html>                                              <!--defines entire webpage and serves as starting point-->
-    <head>                                          <!--hidden from user view, operates bts, contains info used by browser to display and interact with the page-->
-        <meta charset="UTF-8"/>                     <!--set character encoding standard (used to convert to machine language): UTF-8 (default, recommended)-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/> <!--RESPONSIVE design. controls how content is displayed. opens content to full width, normal, and no zoom. useful for mobile-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+        <title>TO DO list</title>
+        <meta name="authors" content="Myra Verde, Angel May Janiola"/>
+        <meta name="date-created" content="2025-09-08"/>
+        <meta name="description" content="A to do list web app that helps user manage tasks. CRUD operations and other expanded features included (priority, timestamp, sort, etc.)"/>
+        <meta name="keywords" content="to do list, tasks, productivity, deadlines, time management"/>
 
-        <title>TO DO list</title>                   <!--title of webpage (shown in browser tab), used by search engines to display title in search results-->  
-
-        <!--meta data: descriptions and keywords used by search engines to index and rank pages, author name, date-->
-        <meta name="authors" content="Myra Verde, Angel May Janiola"/>  <!--meta data for creator name-->
-        <meta name="date-created" content="2025-09-08"/>    <!--for creation date-->
-        <meta name="description" content="A to do list web app that helps user manage tasks. CRUD operations and other expanded features included (priority, timestamp, sort, etc.)"/>                    <!--short description-->
-        <meta name="keywords" content="to do list, tasks, productivity, deadlines, time management"/>   <!--keywords-->
-
-         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>            <!--link to external CSS file for styling-->    
-         <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>                    <!--link to external JavaScript file for interactivity-->    
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <script src="{{ url_for('static', filename='script.js') }}" defer></script>
     </head>
 
-    <body style="background-image: url('/my_images/paperlab1.jpg');">  <!--main content that users see and interact with-->
-       
-        <h1>TO DO LIST</h1>                             
+    <body style="background-image: url('/my_images/paperlab1.jpg');">
+        <h1>TO DO LIST:</h1>                             
+        <h2>NAME: Angel May Janiola & Myra Verde</h2> 
+        <h3>SUBJECT: CMSC 128-1 Lab 1</h3>
 
         <img src="/my_images/iloveu.png" alt="Computer" class=iloveu>
         <img src="/my_images/cool.png" alt="Computer" class=cool>
         <img src="/my_images/goodjob.png" alt="Computer" class=goodjob>
         <img src="/my_images/hellokitty.png" alt="Computer" class=hellokitty>
         <img src="/my_images/miaw.png" alt="Computer" class=miaw>
-        
-        <div class="input-field">
-            <form id="task-form">  
-                <input type="text" id="task" placeholder="Add your task" required />
-                <input type="datetime-local" id="due_date" />
+
+        <!-- Input Section -->
+        <div class="input-container">
+            <div class="input-row">
+                <input type="text" id="task" placeholder="add your task"/>
+                <input type="datetime-local" id="deadline"/>
                 <select id="priority">
                     <option value="Low">Low</option>
                     <option value="Medium" selected>Medium</option>
                     <option value="High">High</option>
                 </select>
-                <button type="button" id="add-task-btn">Add</button>    
-            </form>    
-        </div>
-        <div class="sort-controls">
-            <label for="sort-select">Sort by:</label>
-            <select id="sort-select">
-                <option value="priority">Priority</option>
-                <option value="timestamp">Time Added</option>
-                <option value="due_date">Due Date</option>
-            </select>
-            <select id="sort-order">
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-            </select>
-
-            <button id="sort-btn">Sort</button>
-        </div>
-        <ul id="task-list"></ul>
-
-
-        <div id="editModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h3>Edit Task</h3>
-                <input type="text" id="edit-task" placeholder="Task name" />
-                <input type="datetime-local" id="edit-timestamp" disabled/>
-                <select id="edit-priority">
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
-                </select>
-                <select id="edit-status">
-                    <option value="0">Not Done</option>
-                    <option value="1">Done</option>
-                </select>
-                <input type="datetime-local" id="edit-due-date" />
-                <button id="submit-edit">Update</button>
+                <button type="button" id="addBtn">Add</button>
             </div>
         </div>
 
+        <!-- Sort Section -->
+        <div class="sort-container">
+            <label>Sort by:</label>
+            <select id="sortBy">
+                <option value="timestamp">Date Added</option>
+                <option value="priority">Priority</option>
+                <option value="due_date">Due Date</option>
+            </select>
+        </div>
 
+        <ul id="task-list"></ul>
     </body>
-</html>                                             <!--end of document-->  
-
-
-<!-- global attribute draggable: set to true, element is draggable-->
-<!--global attribute title: ""tooltip on hover-->
-<!--data-attribute: -->
+</html>
