@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Management System</title>
+    <style>
+        
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Indie+Flower&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url("");
+            background-size: cover; /* makes it fill the screen */
+            background-position: center; /* centers it */
+            background-repeat: no-repeat; /* prevents tiling */
+            font-family: 'Indie Flower', cursive;
+            background: #f5f5f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fffef7;
+            border: 2px solid #333;
+            border-radius: 3px;
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            padding: 50px 40px 40px;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e74c3c;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Caveat', cursive;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 38px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-family: 'Indie Flower', cursive;
+            color: #34495e;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 16px;
+            font-family: 'Indie Flower', cursive;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-bottom: 2px solid #34495e;
+            background: transparent;
+            font-size: 16px;
+            font-family: 'Caveat', cursive;
+            transition: border-color 0.3s;
+            font-weight: 600;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-bottom-color: #e74c3c;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2c3e50;
+            color: #fffef7;
+            border: 2px solid #2c3e50;
+            border-radius: 3px;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Caveat', cursive;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: #34495e;
+            border-color: #34495e;
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .secondary-btn {
+            background: #fffef7;
+            color: #2c3e50;
+            border: 2px solid #2c3e50;
+            margin-top: 10px;
+        }
+
+        .secondary-btn:hover {
+            background: #f0f0e8;
+            border-color: #2c3e50;
+        }
+
+        .link-btn {
+            background: none;
+            color: #e74c3c;
+            text-decoration: underline;
+            padding: 5px;
+            margin-top: 15px;
+            font-size: 16px;
+            border: none;
+            box-shadow: none;
+        }
+
+        .link-btn:hover {
+            transform: none;
+            box-shadow: none;
+            color: #c0392b;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            text-align: center;
+            font-family: 'Indie Flower', cursive;
+            border: 2px solid;
+        }
+
+        .error {
+            background: #ffeaa7;
+            color: #d63031;
+            border-color: #d63031;
+        }
+
+        .success {
+            background: #dfe6e9;
+            color: #00b894;
+            border-color: #00b894;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+            background: #2c3e50;
+            border: 3px solid #2c3e50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: #fffef7;
+            font-size: 40px;
+            font-weight: bold;
+            font-family: 'Caveat', cursive;
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-name {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+        }
+
+        .profile-email {
+            color: #7f8c8d;
+            font-size: 16px;
+            font-family: 'Indie Flower', cursive;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-group button {
+            flex: 1;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sign Up Page -->
+        <div id="signupPage" class="page active">
+            <h1>Create Account</h1>
+            <p class="subtitle">Join us today!</p>
+            <div id="signupMessage"></div>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" id="signupUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required minlength="6">
+                </div>
+                <button type="submit">Sign Up</button>
+                <button type="button" class="link-btn" onclick="showPage('loginPage')">
+                    Already have an account? Login
+                </button>
+            </form>
+        </div>
+
+        <!-- Login Page -->
+        <div id="loginPage" class="page">
+            <h1>Welcome Back</h1>
+            <p class="subtitle">Login to your account</p>
+            <div id="loginMessage"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">Username or Email</label>
+                    <input type="text" id="loginUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit">Login</button>
+                <button type="button" class="link-btn" onclick="showPage('forgotPage')">
+                    Forgot Password?
+                </button>
+                <button type="button" class="link-btn" onclick="showPage('signupPage')">
+                    Don't have an account? Sign Up
+                </button>
+            </form>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profilePage" class="page">
+            <div class="profile-header">
+                <div class="profile-icon" id="profileIcon"></div>
+                <div class="profile-name" id="profileName"></div>
+                <div class="profile-email" id="profileEmail"></div>
+            </div>
+            <div id="profileMessage"></div>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="profileNameInput">Full Name</label>
+                    <input type="text" id="profileNameInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="profileUsernameInput">Username</label>
+                    <input type="text" id="profileUsernameInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="profilePasswordInput">New Password (leave blank to keep current)</label>
+                    <input type="password" id="profilePasswordInput" minlength="6">
+                </div>
+                <button type="submit">Update Profile</button>
+                <button type="button" class="secondary-btn" onclick="logout()">Logout</button>
+            </form>
+        </div>
+
+        <!-- Forgot Password Page -->
+        <div id="forgotPage" class="page">
+            <h1>Reset Password</h1>
+            <p class="subtitle">Enter your email to reset your password</p>
+            <div id="forgotMessage"></div>
+            <form id="forgotForm">
+                <div class="form-group">
+                    <label for="forgotEmail">Email</label>
+                    <input type="email" id="forgotEmail" required>
+                </div>
+                <button type="submit">Reset Password</button>
+                <button type="button" class="link-btn" onclick="showPage('loginPage')">
+                    Back to Login
+                </button>
+            </form>
+        </div>
+
+        <!-- Reset Password Page -->
+        <div id="resetPage" class="page">
+            <h1>Set New Password</h1>
+            <p class="subtitle">Enter your new password</p>
+            <div id="resetMessage"></div>
+            <form id="resetForm">
+                <div class="form-group">
+                    <label for="resetPassword">New Password</label>
+                    <input type="password" id="resetPassword" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="resetPasswordConfirm">Confirm Password</label>
+                    <input type="password" id="resetPasswordConfirm" required minlength="6">
+                </div>
+                <button type="submit">Update Password</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Database simulation using localStorage
+        class Database {
+            constructor() {
+                this.users = this.loadUsers();
+                this.currentUser = this.loadCurrentUser();
+            }
+
+            loadUsers() {
+                const data = localStorage.getItem('users');
+                return data ? JSON.parse(data) : [];
+            }
+
+            saveUsers() {
+                localStorage.setItem('users', JSON.stringify(this.users));
+            }
+
+            loadCurrentUser() {
+                const data = localStorage.getItem('currentUser');
+                return data ? JSON.parse(data) : null;
+            }
+
+            saveCurrentUser(user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.currentUser = user;
+            }
+
+            clearCurrentUser() {
+                localStorage.removeItem('currentUser');
+                this.currentUser = null;
+            }
+
+            findUserByEmail(email) {
+                return this.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+            }
+
+            findUserByUsername(username) {
+                return this.users.find(u => u.username.toLowerCase() === username.toLowerCase());
+            }
+
+            findUserByEmailOrUsername(identifier) {
+                const lower = identifier.toLowerCase();
+                return this.users.find(u => 
+                    u.email.toLowerCase() === lower || 
+                    u.username.toLowerCase() === lower
+                );
+            }
+
+            createUser(name, email, username, password) {
+                if (this.findUserByEmail(email)) {
+                    throw new Error('Email already exists');
+                }
+                if (this.findUserByUsername(username)) {
+                    throw new Error('Username already exists');
+                }
+
+                const user = {
+                    id: Date.now().toString(),
+                    name,
+                    email,
+                    username,
+                    password,
+                    createdAt: new Date().toISOString()
+                };
+
+                this.users.push(user);
+                this.saveUsers();
+                return user;
+            }
+
+            updateUser(userId, updates) {
+                const userIndex = this.users.findIndex(u => u.id === userId);
+                if (userIndex === -1) {
+                    throw new Error('User not found');
+                }
+
+                // Check if new username is taken by another user
+                if (updates.username) {
+                    const existingUser = this.findUserByUsername(updates.username);
+                    if (existingUser && existingUser.id !== userId) {
+                        throw new Error('Username already taken');
+                    }
+                }
+
+                this.users[userIndex] = { ...this.users[userIndex], ...updates };
+                this.saveUsers();
+
+                // Update current user if it's the same user
+                if (this.currentUser && this.currentUser.id === userId) {
+                    this.saveCurrentUser(this.users[userIndex]);
+                }
+
+                return this.users[userIndex];
+            }
+
+            resetPassword(email, newPassword) {
+                const user = this.findUserByEmail(email);
+                if (!user) {
+                    throw new Error('User not found');
+                }
+
+                return this.updateUser(user.id, { password: newPassword });
+            }
+        }
+
+        const db = new Database();
+        let resetEmail = null;
+
+        // Helper functions
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            clearMessages();
+        }
+
+        function showMessage(elementId, message, isError = false) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="message ${isError ? 'error' : 'success'}">${message}</div>`;
+        }
+
+        function clearMessages() {
+            document.querySelectorAll('[id$="Message"]').forEach(el => el.innerHTML = '');
+        }
+
+        function logout() {
+            db.clearCurrentUser();
+            showPage('loginPage');
+        }
+
+        function loadProfile() {
+            if (!db.currentUser) return;
+
+            const user = db.currentUser;
+            document.getElementById('profileIcon').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('profileName').textContent = user.name;
+            document.getElementById('profileEmail').textContent = user.email;
+            document.getElementById('profileNameInput').value = user.name;
+            document.getElementById('profileUsernameInput').value = user.username;
+            document.getElementById('profilePasswordInput').value = '';
+        }
+
+        // Sign Up Form
+        document.getElementById('signupForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearMessages();
+
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const username = document.getElementById('signupUsername').value.trim();
+            const password = document.getElementById('signupPassword').value;
+
+            try {
+                const user = db.createUser(name, email, username, password);
+                showMessage('signupMessage', 'Account created successfully! Redirecting to login...');
+                setTimeout(() => {
+                    document.getElementById('signupForm').reset();
+                    showPage('loginPage');
+                }, 1500);
+            } catch (error) {
+                showMessage('signupMessage', error.message, true);
+            }
+        });
+
+        // Login Form
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearMessages();
+
+            const identifier = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            const user = db.findUserByEmailOrUsername(identifier);
+
+            if (!user) {
+                showMessage('loginMessage', 'User not found', true);
+                return;
+            }
+
+            if (user.password !== password) {
+                showMessage('loginMessage', 'Incorrect password', true);
+                return;
+            }
+
+            db.saveCurrentUser(user);
+            loadProfile();
+            showPage('profilePage');
+            document.getElementById('loginForm').reset();
+        });
+
+        // Profile Update Form
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearMessages();
+
+            const name = document.getElementById('profileNameInput').value.trim();
+            const username = document.getElementById('profileUsernameInput').value.trim();
+            const password = document.getElementById('profilePasswordInput').value;
+
+            try {
+                const updates = { name, username };
+                if (password) {
+                    updates.password = password;
+                }
+
+                db.updateUser(db.currentUser.id, updates);
+                loadProfile();
+                showMessage('profileMessage', 'Profile updated successfully!');
+                document.getElementById('profilePasswordInput').value = '';
+            } catch (error) {
+                showMessage('profileMessage', error.message, true);
+            }
+        });
+
+        // Forgot Password Form
+        document.getElementById('forgotForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearMessages();
+
+            const email = document.getElementById('forgotEmail').value.trim();
+            const user = db.findUserByEmail(email);
+
+            if (!user) {
+                showMessage('forgotMessage', 'No account found with that email', true);
+                return;
+            }
+
+            resetEmail = email;
+            showMessage('forgotMessage', 'Email verified! Redirecting...');
+            setTimeout(() => {
+                document.getElementById('forgotForm').reset();
+                showPage('resetPage');
+            }, 1500);
+        });
+
+        // Reset Password Form
+        document.getElementById('resetForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearMessages();
+
+            const password = document.getElementById('resetPassword').value;
+            const confirmPassword = document.getElementById('resetPasswordConfirm').value;
+
+            if (password !== confirmPassword) {
+                showMessage('resetMessage', 'Passwords do not match', true);
+                return;
+            }
+
+            try {
+                db.resetPassword(resetEmail, password);
+                showMessage('resetMessage', 'Password reset successfully! Redirecting to login...');
+                setTimeout(() => {
+                    document.getElementById('resetForm').reset();
+                    resetEmail = null;
+                    showPage('loginPage');
+                }, 1500);
+            } catch (error) {
+                showMessage('resetMessage', error.message, true);
+            }
+        });
+
+        // Check if user is already logged in on page load
+        window.addEventListener('load', () => {
+            if (db.currentUser) {
+                loadProfile();
+                showPage('profilePage');
+            }
+        });
+    </script>
+</body>
+</html>
