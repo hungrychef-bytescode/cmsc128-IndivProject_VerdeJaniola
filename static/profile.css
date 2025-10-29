@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 50px 20px;
+  font-family: 'Inter', sans-serif;
+  background: url('/static/cover.jpg') center/cover no-repeat fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Spiral rings */
+body::after {
+  content: '';
+  position: fixed;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background: 
+    radial-gradient(circle at 30px 22px, #ec7fb1 12px, transparent 12px),
+    radial-gradient(circle at 30px 22px, #f8a5c7 18px, transparent 18px),
+    radial-gradient(circle at 30px 77px, #ec7fb1 12px, transparent 12px),
+    radial-gradient(circle at 30px 77px, #f8a5c7 18px, transparent 18px);
+  background-size: 60px 110px;
+  background-repeat: repeat-y;
+  z-index: 11;
+  pointer-events: none;
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  gap: 30px;
+  margin-left: 100px;
+  position: relative;
+}
+
+.personal-info, .update-password {
+  background: #ffffff;
+  border: 3px solid #f8a5c7;
+  border-radius: 20px;
+  width: 100%;
+  padding: 30px 35px;
+  box-shadow: 
+    0 10px 30px rgba(236, 127, 177, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+
+/* Decorative cloud shape at top of first card */
+.personal-info::before {
+  content: '';
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 60px;
+  background: #f8a5c7;
+  border-radius: 50px;
+  box-shadow: 
+    -45px 0 0 -8px #f8a5c7,
+    45px 0 0 -8px #f8a5c7,
+    -70px 0 0 -18px #f8a5c7,
+    70px 0 0 -18px #f8a5c7;
+  z-index: -1;
+}
+
+.profile-intro, .password-intro {
+  background: linear-gradient(135deg, #ffd4e5 0%, #ffe8f0 100%);
+  border: 3px solid #f8a5c7;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#person-icon, #lock-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  filter: brightness(0) saturate(100%) invert(48%) sepia(41%) saturate(1078%) hue-rotate(299deg) brightness(91%) contrast(88%);
+}
+
+.profile-intro h1, .password-intro h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #d65a8a;
+  margin: 0;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
+}
+
+.personal-info p, .update-password p {
+  text-align: left;
+  margin: 0 0 18px 0;
+  font-size: 14px;
+  color: #9c5b7a;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+#profile-form, #password-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#profile-form label, #password-form label {
+  display: block;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 600;
+  color: #9c5b7a;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+#profile-form input, #password-form input {
+  display: block;
+  width: 100%;
+  padding: 11px 14px;
+  border: 2px solid #f8a5c7;
+  border-radius: 10px;
+  color: #333;
+  background: linear-gradient(to bottom, #ffffff 0%, #fff5f8 100%);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  margin-bottom: 8px;
+}
+
+#profile-form input:focus, #password-form input:focus {
+  outline: none;
+  border-color: #ec7fb1;
+  box-shadow: 0 0 0 4px rgba(236, 127, 177, 0.15);
+  transform: translateY(-1px);
+}
+
+#save-changes-btn, #update-password-btn {
+  padding: 13px;
+  background: linear-gradient(135deg, #ec7fb1 0%, #f8a5c7 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(236, 127, 177, 0.3);
+  margin-top: 18px;
+  width: 100%;
+}
+
+#save-changes-btn:hover, #update-password-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(236, 127, 177, 0.4);
+  background: linear-gradient(135deg, #f8a5c7 0%, #ec7fb1 100%);
+}
+
+#save-changes-btn:active, #update-password-btn:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 10px rgba(236, 127, 177, 0.3);
+}
+
+#log-out-btn {
+  padding: 13px 50px;
+  background: linear-gradient(135deg, #ff6b9d 0%, #ec7fb1 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(236, 127, 177, 0.3);
+  align-self: center;
+}
+
+#log-out-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+  background: linear-gradient(135deg, #ec7fb1 0%, #ff6b9d 100%);
+}
+
+#log-out-btn:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 10px rgba(236, 127, 177, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    padding: 30px 15px;
+  }
+  
+  body::after {
+    display: none;
+  }
+  
+  .center-container {
+    margin-left: 0;
+    width: 100%;
+    gap: 25px;
+  }
+  
+  .personal-info, .update-password {
+    padding: 25px 22px;
+  }
+  
+  .personal-info::before {
+    display: none;
+  }
+  
+  .profile-intro h1, .password-intro h1 {
+    font-size: 20px;
+  }
+  
+  #person-icon, #lock-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
