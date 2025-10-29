@@ -2,9 +2,9 @@ import sqlite3
 import os
 
 # initialize the database and table
-def init_db():
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    db_path = os.path.join(project_root, "task.db")
+def init_db(app):
+    db_path = os.path.join(app.instance_path, "database.db")
+    os.makedirs(app.instance_path, exist_ok=True)
     try:
         with sqlite3.connect(db_path) as conn:       #connect the sqlite to the db path
             cursor = conn.cursor()

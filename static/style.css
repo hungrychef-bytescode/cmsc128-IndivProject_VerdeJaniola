@@ -1,413 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-    font-family: "Comic Sans MS", "Brush Script MT", cursive;
-    margin: 0;
-    padding: 20px;
-    background-color: #f8f9fa;
-    background-image: url('\my_images\paperlab1.jpg');
-}
-
-h1 {
-    color: BLACK; 
-    font-size: 40px;
-    font-weight: bold;
-    font-style: italic;
-    margin-top: 22px;
-    margin-left: 175px;
-    position: relative; 
-    top: 30px;  
-} 
-
-h2 {
-    color: rgb(48, 44, 44);
-    font-size: 20px;
-    font-style: italic;
-    margin-left: 185px;
-} 
-
-h3 {
-    color: rgb(48, 44, 44);
-    font-size: 20px;
-    font-style: italic;
-    margin-top: -43px;
-    margin-left: 850px;
-} 
-
-/* Sticker positioning */
-.iloveu {
-    position: relative; 
-    top: -220px;   
-    left: 160px;  
-    width: 75px;
-    height: 75px;
-    transform: rotate(-10deg);
-} 
-
-.goodjob {
-    position: relative; 
-    top: -170px;   
-    left: 930px;  
-    width: 105px;
-    height: 105px;
-    transform: rotate(25deg);
-}
-
-.cool {
-    position: relative; 
-    top: -160px;   
-    left: -25px;  
-    width: 125px;
-    height: 125px;
-    transform: rotate(-5deg);
-}
-
-.hellokitty {
-    position: relative; 
-    top: -175px;   
-    left: 740px;  
-    width: 75px;
-    height: 75px;
-    transform: rotate(-15deg);
-}
-
-.miaw {
-    position: relative; 
-    top: -130px;   
-    left: -310px;  
-    width: 80px;
-    height: 80px;
-    transform: rotate(-15deg);
-}
-
-/* Input field container */
-.input-container {
-    position: relative;
-    top: -125px;
-    left: 180px;
-    max-width: 920px;
-    background-color: rgba(225, 255, 141, 0.897);
-    padding: 15px;
-    border-radius: 10px;
-    border: 2px solid #5f6061;
-}
-
-.input-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.input-container input[type="text"] {
-    flex: 1;
-    min-width: 250px;
-    padding: 8px;
-    height: 30px;
-    border: 2px solid #5f6061; 
-    border-radius: 5px;
-    background-color: #ffffff;
-    color: #000;
-    font-family: inherit;
-    font-size: 16px;
-}
-
-.input-container input[type="datetime-local"] {
-    padding: 8px;
-    height: 30px;
-    border: 2px solid #5f6061;
-    border-radius: 5px;
-    background-color: #ffffff;
-    font-family: inherit;
-    font-size: 14px;
-    min-width: 180px;
-}
-
-.input-container select {
-    padding: 8px;
-    height: 50px;
-    border: 2px solid #5f6061;
-    border-radius: 5px;
-    background-color: #ffffff;
-    font-family: inherit;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.input-container button {
-    padding: 8px 15px;
-    height: 50px;
-    border: 2px solid #5f6061;  
-    background-color: #e476a4;   
-    color: #ffffff;   
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.input-container button:hover {
-    background-color: #d165a0;   
-}
-
-/* Sort container */
-.sort-container {
-    position: relative;
-    top: -115px;
-    left: 180px;
-    max-width: 920px;
-    background-color: rgba(115, 255, 150, 0.863);
-    padding: 10px 15px;
-    border-radius: 10px;
-    border: 2px solid #5f6061;
-    margin-bottom: 15px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.sort-container label {
-    font-size: 16px;
-    color: #000;
-}
-
-.sort-container select {
-    padding: 6px 10px;
-    border: 2px solid #5f6061;
-    border-radius: 5px;
-    background-color: #ffffff;
-    font-family: inherit;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.sort-container button {
-    padding: 6px 15px;
-    border: 2px solid #5f6061;  
-    background-color: #e476a4;   
-    color: rgb(255, 250, 250);   
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.sort-container button:hover {
-    background-color: #8fbc8f;
-}
-
-/* Task list styling */
-#task-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-#task-list li {  
-    position: relative;
-    left: 180px;
-    top: -110px;
-    margin-bottom: 5px;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    color: #000;         
-    font-weight: 500;
-    background-color: rgba(200, 238, 255, 0.692);
-    max-width: 940px;
-    padding: 5px;
-    border-radius: 8px;
-    border: 2px solid #5f6061;
-    gap: 10px;
-}
-
-#task-list li:hover {
-    background-color: rgba(56, 192, 197, 0.486);
-}
-
-/* Checkbox styling */
-#task-list li input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-/* Task text */
-#task-list li .task-text {
-    flex-grow: 1;
-    margin-right: 10px;
-    word-wrap: break-word;
-}
-
-.deadline-input {
-  border: none;
-  background: transparent;
-  font-size: inherit;
-  font-family: inherit;
-  color: inherit;
-  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   margin: 0;
-  cursor: pointer;
-  width: auto;
-  position: absolute;
-  opacity: 0;
+  font-family: 'Inter', sans-serif;
+  background: url('/static/cover.jpg') center/cover no-repeat fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Spiral binding on the left 
+body::before {
+  content: '';
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 40px,
+    #ec7fb1 40px,
+    #ec7fb1 45px,
+    transparent 45px,
+    transparent 55px
+  );
+  z-index: 10;
+  pointer-events: none;
+}*/
+
+/* Spiral rings */
+body::after {
+  content: '';
+  position: fixed;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background: 
+    radial-gradient(circle at 30px 22px, #ec7fb1 12px, transparent 12px),
+    radial-gradient(circle at 30px 22px, #f8a5c7 18px, transparent 18px),
+    radial-gradient(circle at 30px 77px, #ec7fb1 12px, transparent 12px),
+    radial-gradient(circle at 30px 77px, #f8a5c7 18px, transparent 18px);
+  background-size: 60px 110px;
+  background-repeat: repeat-y;
+  z-index: 11;
   pointer-events: none;
 }
 
-
-/* Priority badge */
-.priority-badge {
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: bold;
-    white-space: nowrap;
+.signup-container, .reset-password-container, .forgot-password-container, .login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 480px;
+  height: 600px;
+  gap: 18px;
+  background: #ffffff;
+  border: 3px solid #f8a5c7;
+  border-radius: 20px;
+  padding: 35px 40px 30px 40px;
+  box-shadow: 
+    0 10px 30px rgba(236, 127, 177, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+  margin-left: 100px;
 }
 
-.priority-high {
-    background-color: #ffb3b3;
-    color: #8b0000;
-    border: 2px solid #ff9999;
+/* Decorative cloud shape at top */
+.signup-container::before, .login-container::before, .reset-password-container::before, .forgot-password-container::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 80px;
+  background: #f8a5c7;
+  border-radius: 50px;
+  box-shadow: 
+    -60px 0 0 -10px #f8a5c7,
+    60px 0 0 -10px #f8a5c7,
+    -90px 0 0 -20px #f8a5c7,
+    90px 0 0 -20px #f8a5c7;
+  z-index: -1;
 }
 
-.priority-medium {
-    background-color: #ffd4a3;
-    color: #b35900;
-    border: 2px solid #ffb366;
+.signup-intro, .forgot-intro, .login-intro, .reset-intro {
+  background: linear-gradient(135deg, #ffd4e5 0%, #ffe8f0 100%);
+  border: 3px solid #f8a5c7;
+  border-radius: 15px;
+  width: 100%;
+  padding: 30px 25px;
+  text-align: center;
+  position: relative;
+  margin-bottom: 1px;
 }
 
-.priority-low {
-    background-color: #c8e6c9;
-    color: #2e7d32;
-    border: 2px solid #81c784;
+.signup-intro h1, .forgot-intro h1, .login-intro h1, .reset-intro h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #d65a8a;
+  margin-top: -10px;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+  height: 30px;
 }
 
-/* Deadline display */
-.deadline-display {
-    font-size: 13px;
-    color: #6c757d;
-    white-space: nowrap;
+.signup-intro p, .forgot-intro p, .login-intro p {
+  font-size: 16px;
+  color: #9c5b7a;
+  margin: 0;
+  font-weight: 500;
 }
 
-/* Task actions container */
-#task-list li .task-actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
+#signup-form, #login-form, #forgot-password-form, #reset-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: -30px;
 }
 
-/* Button styling for task actions */
-#task-list li button {
-    padding: 6px 12px;
-    border: 2px solid #5f6061;
-    color: #ffffff;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: bold;
-    min-width: 60px;
-    height: 28px;
+#signup-form input, #login-form input,
+#signup-form label, #login-form label, #forgot-password-form input, 
+#forgot-password-form label, #reset-form input, #reset-form label{
+  display: block;
+  width: 100%;
+  font-size: 14px;
 }
 
-/* Edit button */
-#task-list li .btn-edit {
-    background-color: #deb4d6;
-    border-color: #c997c1;
+#signup-form label, #login-form label, #forgot-password-form label, #reset-form label {
+  font-weight: 600;
+  color: #9c5b7a;
+  margin-bottom: 6px;
+  margin-top: 8px;
 }
 
-#task-list li .btn-edit:hover {
-    background-color: #c997c1;
+#signup-form input, #login-form input, #forgot-password-form input, #reset-form input{
+  padding: 12px 15px;
+  border: 2px solid #f8a5c7;
+  border-radius: 10px;
+  color: #333;
+  background: linear-gradient(to bottom, #ffffff 0%, #fff5f8 100%);
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
 }
 
-/* Delete button */
-#task-list li .btn-delete {
-    background-color: #ffb3b3;
-    border-color: #ff9999;
+#signup-form input:focus, #login-form input:focus, #forgot-password-form input:focus, #reset-form input:focus {
+  outline: none;
+  border-color: #ec7fb1;
+  box-shadow: 0 0 0 4px rgba(236, 127, 177, 0.15);
+  transform: translateY(-2px);
 }
 
-#task-list li .btn-delete:hover {
-    background-color: #ff9999;
+#signup-form button[type="submit"], 
+#login-form button[type="submit"], #forgot-password-form[type="submit"] {
+  padding: 14px;
+  background: linear-gradient(135deg, #ec7fb1 0%, #f8a5c7 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(236, 127, 177, 0.3);
+  margin-top: 10px;
 }
 
-/* Completed task styling */
-#task-list li.completed {
-    opacity: 0.7;
-    background-color: rgba(248, 249, 250, 0.8);
+#signup-form button[type="submit"]:hover,
+#login-form button[type="submit"]:hover,  #forgot-password-form[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(236, 127, 177, 0.4);
+  background: linear-gradient(135deg, #f8a5c7 0%, #ec7fb1 100%);
 }
 
-#task-list li.completed .task-text {
-    text-decoration: line-through;
-    color: #6c757d;
+#signup-form button[type="submit"]:active,
+#login-form button[type="submit"]:active,  #forgot-password-form[type="submit"]:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 10px rgba(236, 127, 177, 0.3);
 }
 
-/* Toast notification */
-.toast {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) translateY(20px);
-    background-color: #e476a4;
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 15px;
-    font-family: "Comic Sans MS", "Brush Script MT", cursive;
-    font-size: 14px;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(228, 118, 164, 0.3);
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    border: 2px solid #fff;
+.link-btn, #signup-link, #login-btn {
+  background: none;
+  border: none;
+  color: #d65a8a;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  padding: 5px 8px;
+  margin: 5px auto 0 auto !important;
+  font-family: 'Inter', sans-serif;
+  display: block !important;
+  text-align: center !important;
+  width: 100% !important;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-    h3 {
-        margin-left: 600px;
-    }
-    
-    .input-container,
-    .sort-container {
-        left: 100px;
-        max-width: calc(100% - 200px);
-    }
-    
-    #task-list li {
-        left: 110px;
-        max-width: calc(100% - 220px);
-    }
-    
-    .goodjob {
-        left: 680px;
-    }
-    
-    .hellokitty {
-        left: 540px;
-    }
+.link-btn:hover, #signup-link:hover, #login-link:hover {
+  color: #ec7fb1;
+  text-decoration: underline;
 }
 
-@media (max-width: 900px) {
-    .input-container,
-    .sort-container {
-        left: 50px;
-        max-width: calc(100% - 100px);
-    }
+/* Small decorative hearts
+.signup-container::after, .login-container::after {
+  content: '♡ ♡ ♡';
+  position: absolute;
+  bottom: 15px;
+  font-size: 18px;
+  color: #f8a5c7;
+  letter-spacing: 10px;
+}
+  */
 
-    #task-list li {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-        left: 50px;
-        max-width: calc(100% - 100px);
-    }
-    
-    #task-list li .task-actions {
-        width: 100%;
-    }
-    
-    #task-list li button {
-        flex: 1;
-    }
+/* Responsive design */
+@media (max-width: 768px) {
+  body::before, body::after {
+    display: none;
+  }
+  
+  .signup-container, .login-container, .forgot-password-container, .reset-password-container {
+    margin-left: 0;
+    width: 95%;
+    padding: 30px 20px;
+  }
 }

@@ -1,0 +1,123 @@
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+
+}
+
+.personal-info {
+    border: 1px solid #c6c8c9;
+    border-radius: 8px;
+    width: 70%;
+    padding: 20px;
+    margin-top: 5px;
+    display: block;
+}
+
+.update-password {
+    border: 1px solid #c6c8c9;
+    border-radius: 8px;
+    width: 70%;
+    padding: 20px;
+    margin-top: 5px;
+    align-items: center;
+    display: block;
+}
+
+.profile-intro {
+    text-align: left;
+    font-size: 0;
+}
+
+#person-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0px;
+}
+
+.profile-intro h1{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 20px;
+    margin-left: 10px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.personal-info p {
+    text-align: left;
+    margin-top: 0px;
+    font-size: 16px;
+    color: #7d8590;
+    vertical-align:top;
+}
+
+.password-intro {
+    text-align: left;
+    font-size: 0;
+}
+
+#lock-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0px;
+}
+
+.password-intro h1{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 20px;
+    margin-left: 10px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.update-password p {
+    text-align: left;
+    margin-top: 0px;
+    font-size: 16px;
+    color: #7d8590;
+    vertical-align:top;
+}
+
+#profile-form input, #profile-form label, #password-form input, #password-form label {
+    display: block;
+    width: 95%;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+#profile-form input, #password-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+  margin: 0, auto;
+  background-color: #eaecec;
+}
+
+#save-changes-btn, #update-password-btn {
+    padding: 12px;
+    background: #000102;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#profile-form label, #password-form label {
+    font-weight: 600;
+    color: #333;
+}
+
+#profile-form input:focus, #password-form input:focus {
+    outline: none;
+    border-color: #1f6feb;
+    box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.15);
+}
