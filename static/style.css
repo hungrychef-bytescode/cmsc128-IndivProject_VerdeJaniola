@@ -153,7 +153,8 @@ body::after {
   transition: all 0.3s ease;
 }
 
-#signup-form input:focus, #login-form input:focus, #forgot-password-form input:focus, #reset-form input:focus {
+#signup-form input:focus, #login-form input:focus, 
+#forgot-password-form input:focus, #reset-form input:focus {
   outline: none;
   border-color: #ec7fb1;
   box-shadow: 0 0 0 4px rgba(236, 127, 177, 0.15);
@@ -209,6 +210,11 @@ body::after {
 .link-btn:hover, #signup-link:hover, #login-link:hover {
   color: #ec7fb1;
   text-decoration: underline;
+}
+
+input::placeholder {
+  color: #b7b6b6;
+  font-style: italic;
 }
 
 /* Small decorative hearts

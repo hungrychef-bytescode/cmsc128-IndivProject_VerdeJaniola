@@ -17,9 +17,9 @@
             </div>
             <form id="login-form">
                 <label for="login-id">Username or Email</label>
-                <input type="text" id="login-id" name="login_id" required>
+                <input type="text" id="login-id" name="login_id" placeholder="ex. jcruz@gmail.com or jcruz" required>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder=" "required minlength="8">
+                <input type="password" id="password" name="password" placeholder="enter your password"required minlength="8">
                 <button type="submit">Log in</button>
             </form>
             <a href="{{ url_for('security.forgot_password') }}">Forgot Password?</a>

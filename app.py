@@ -4,15 +4,18 @@ from flask_security import Security, SQLAlchemyUserDatastore, UserMixin
 from flask_mail import Mail
 import uuid
 from flask_security.utils import hash_password, verify_and_update_password
+from dotenv import load_dotenv
+import os
 
-
+# Load .env file
+load_dotenv()
 
 # create flask app instance
 account_app = Flask(__name__)
 # use sqlite database. create database.db
 account_app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 # secret key necessary for sessions
-account_app.secret_key = "sk-vmjam-128assign2"
+account_app.secret_key = os.getenv("SECRET_KEY")
 
 # initialize and connects/binds the database to the flask
 database = SQLAlchemy(account_app)
@@ -21,18 +24,18 @@ database = SQLAlchemy(account_app)
 #enable password recovery features
 account_app.config["SECURITY_RECOVERABLE"] = True
 account_app.config["SECURITY_REGISTERABLE"] = False
-account_app.config["SECURITY_EMAIL_SENDER"] = "hungrychefbytescode@gmail.com"
 account_app.config["SECURITY_PASSWORD_HASH"] = "pbkdf2_sha512"
-account_app.config["SECURITY_PASSWORD_SALT"] = "sk-vmjam-128"
 account_app.config["SECURITY_RESET_PASSWORD_WITHIN"] = "5 minutes"
+account_app.config["SECURITY_EMAIL_SENDER"] = os.getenv("SECURITY_EMAIL_SENDER")
+account_app.config["SECURITY_PASSWORD_SALT"] = os.getenv("SECURITY_PASSWORD_SALT")
 
 
 # email configuration
 account_app.config["MAIL_SERVER"] = "smtp.gmail.com"        #specify the gmail smtp server
 account_app.config["MAIL_PORT"] = 587                       #standart port number for TLS-encrypted emails (port to connect to smtp server)
 account_app.config["MAIL_USE_TLS"] = True                   #Transport Layer Security - protects email content&credentials between app and gmail
-account_app.config["MAIL_USERNAME"] = "hungrychefbytescode@gmail.com"
-account_app.config["MAIL_PASSWORD"] = "dnap nhhf oiwk uzut"
+account_app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
+account_app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")  #app password generated
 
 mail = Mail(account_app)
 
@@ -51,6 +54,7 @@ user_datastore = SQLAlchemyUserDatastore(database, Users, None)
 security = Security()
 security.init_app(account_app, user_datastore, login_form=None,
                   register_form=None)
+
 # change redirect after reset to login page
 account_app.config["SECURITY_POST_RESET_VIEW"] = "/user_login"
 

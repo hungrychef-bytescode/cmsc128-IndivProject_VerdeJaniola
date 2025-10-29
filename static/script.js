@@ -77,9 +77,6 @@ if (profileForm) {
 
             if (updateProfileResult.success) {
                 showToast(updateProfileResult.message);
-                // setTimeout(() => {
-                //     window.location.href = "/profile";
-                // }, 1500);
             } else {
                 showToast(updateProfileResult.message);
             }
@@ -183,6 +180,7 @@ if (signupBtn){
 
 if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
+
         // Create pop-up
         const popup = document.createElement("div");
         Object.assign(popup.style, {
@@ -226,7 +224,6 @@ function showToast(message, duration = 2000) {
     toast.className = "toast";
     toast.textContent = message;
 
-    // initial style
     Object.assign(toast.style, {
         position: "fixed",
         top: "50%",
