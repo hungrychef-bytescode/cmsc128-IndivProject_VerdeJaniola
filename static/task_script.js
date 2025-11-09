@@ -11,7 +11,49 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const addTaskBtn = document.getElementById("addBtn");
+const logoutBtn = document.getElementById("log-out-btn")
+
 addTaskBtn.addEventListener("click", addTask);
+
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+
+        // Create pop-up
+        const popup = document.createElement("div");
+        Object.assign(popup.style, {
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            background: "#fff",
+            padding: "20px 25px",
+            borderRadius: "12px",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+            textAlign: "center",
+            zIndex: "9999",
+        });
+
+        popup.innerHTML = `
+            <p style="margin-bottom: 20px; font-weight:500;">Are you sure you want to log out?</p>
+            <button id="confirm-logout" style="margin-right:10px; padding:8px 15px; background:#ec7fb1; color:#fff; border:none; border-radius:8px; cursor:pointer;">Yes</button>
+            <button id="cancel-logout" style="padding:8px 15px; background:#ccc; color:#333; border:none; border-radius:8px; cursor:pointer;">No</button>
+        `;
+
+        document.body.appendChild(popup);
+
+        // Confirm button
+        popup.querySelector("#confirm-logout").addEventListener("click", () => {
+            window.location.href = "/logout";
+        });
+
+        // Cancel button
+        popup.querySelector("#cancel-logout").addEventListener("click", () => {
+            if (document.body.contains(popup)) {
+                document.body.removeChild(popup);
+            }
+        });
+    });
+}
 
 async function addTask() {
     const taskInput = document.getElementById("task");
@@ -70,9 +112,15 @@ async function getTasks(sortBy, order) {
     }
     
     try {
-        const response = await fetch(`/tasks${query}`);
+        const response = await fetch(`/tasks${query}`, {
+            method: "GET",
+            credentials: "include" 
+        });
+
         const tasks = await response.json();
+        console.log('Fetched tasks:', tasks);
         displayTasks(tasks);
+        // console.log("Raw response:", await response.text());
     } catch (error) {
         console.error("Tasks not fetched.", error);
     }

@@ -1,7 +1,7 @@
 from db.connection import get_db_connection
 from crud.format import format_tasks
 
-def read_sorted_tasks(sort_by="timestamp", order="asc"):
+def read_sorted_tasks(list_id, sort_by="timestamp", order="asc"):
     try:
         with get_db_connection() as conn:
             if conn is None:
@@ -10,7 +10,8 @@ def read_sorted_tasks(sort_by="timestamp", order="asc"):
 
             if sort_by == "priority":
                 query = f"""
-                    SELECT * FROM tasks
+                    SELECT id, task, timestamp, priority, status, due_date FROM tasks
+                    WHERE list_id = ?
                     ORDER BY 
                         CASE priority
                             WHEN "High" THEN 3
@@ -19,11 +20,11 @@ def read_sorted_tasks(sort_by="timestamp", order="asc"):
                         END {dir}
                 """
             elif sort_by == "due_date":
-                query = f"SELECT * FROM tasks ORDER BY CASE WHEN due_date IS NULL THEN 1 ELSE 0 END, due_date {dir}"
+                query = f"SELECT id, task, timestamp, priority, status, due_date FROM tasks WHERE list_id = ? ORDER BY CASE WHEN due_date IS NULL THEN 1 ELSE 0 END, due_date {dir}"
             else:
-                query = f"SELECT * FROM tasks ORDER BY timestamp {dir}"
+                query = f"SELECT id, task, timestamp, priority, status, due_date FROM tasks WHERE list_id = ? ORDER BY timestamp {dir}"
 
-            tasks = conn.execute(query).fetchall()
+            tasks = conn.execute(query, (list_id,)).fetchall()
             return format_tasks(tasks)
     except Exception as e:
         print(f"Error sorting tasks: {e}")

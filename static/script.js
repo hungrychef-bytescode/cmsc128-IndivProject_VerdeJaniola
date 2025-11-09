@@ -122,7 +122,7 @@ if (signupForm) {
             if (signupResult.success) {
                 showToast(signupResult.message);
                 setTimeout(() => {
-                    window.location.href = "/profile";
+                    window.location.href = "/index";
                 }, 1500);
             } else {
                 showToast(signupResult.message);
@@ -160,7 +160,7 @@ if (loginForm) {
             if (loginResult.success) {
                 showToast(loginResult.message);
                 setTimeout(() => {
-                    window.location.href = "/profile";
+                    window.location.href = "/index";
                 }, 1500);
             } else {
                 showToast(loginResult.message);

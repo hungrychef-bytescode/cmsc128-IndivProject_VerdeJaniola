@@ -1,15 +1,15 @@
 from db.connection import get_db_connection
 
-def add_task(task, timestamp, priority, status, due_date):
+def add_task(task, timestamp, priority, status, due_date, list_id):
     try:
         with get_db_connection() as conn:
             conn.execute("""
-                INSERT INTO tasks (task, timestamp, priority, status, due_date)
-                    VALUES (?, ?, ?, ?, ?)""",
-                    (task, timestamp, priority, status, due_date)
+                INSERT INTO tasks (task, timestamp, priority, status, due_date, list_id)
+                    VALUES (?, ?, ?, ?, ?, ?)""",
+                    (task, timestamp, priority, status, due_date, list_id)
             )
             conn.commit()
-            print("Received:", task, timestamp, priority, status, due_date)
+            print("Received:", task, timestamp, priority, status, due_date, list_id)
             return {"success": True}
     except Exception as e:
         print(f"Error adding task: {e}")
