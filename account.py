@@ -1,43 +1,40 @@
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_security import Security, SQLAlchemyUserDatastore, UserMixin
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
+from flask_security import UserMixin, Security
+from database import database, Lists
 from flask_mail import Mail
-import uuid
 from flask_security.utils import hash_password, verify_and_update_password
+import uuid
 from dotenv import load_dotenv
 import os
 
 # Load .env file
 load_dotenv()
 
-# create flask app instance
-account_app = Flask(__name__)
-# use sqlite database. create database.db
-account_app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-# secret key necessary for sessions
-account_app.secret_key = os.getenv("SECRET_KEY")
+account_app = Blueprint("account", __name__)
 
-# initialize and connects/binds the database to the flask
-database = SQLAlchemy(account_app)
+class Config:
+   SQLALCHEMY_DATABASE_URI = "sqlite:///database.db"
+   SECRET_KEY = os.getenv("SECRET_KEY")
+   
+    # flask security configurations
+    #enable password recovery features
+   SECURITY_RECOVERABLE = True
+   SECURITY_REGISTERABLE = False
+   SECURITY_PASSWORD_HASH = "pbkdf2_sha512"
+   SECURITY_RESET_PASSWORD_WITHIN = "5 minutes"
+   SECURITY_EMAIL_SENDER = os.getenv("SECURITY_EMAIL_SENDER")
+   SECURITY_PASSWORD_SALT = os.getenv("SECURITY_PASSWORD_SALT")
 
-# flask security configurations
-#enable password recovery features
-account_app.config["SECURITY_RECOVERABLE"] = True
-account_app.config["SECURITY_REGISTERABLE"] = False
-account_app.config["SECURITY_PASSWORD_HASH"] = "pbkdf2_sha512"
-account_app.config["SECURITY_RESET_PASSWORD_WITHIN"] = "5 minutes"
-account_app.config["SECURITY_EMAIL_SENDER"] = os.getenv("SECURITY_EMAIL_SENDER")
-account_app.config["SECURITY_PASSWORD_SALT"] = os.getenv("SECURITY_PASSWORD_SALT")
+   MAIL_SERVER = "smtp.gmail.com"        #specify the gmail smtp server
+   MAIL_PORT = 587                       #standart port number for TLS-encrypted emails (port to connect to smtp server)
+   MAIL_USE_TLS = True                   #Transport Layer Security - protects email content&credentials between app and gmail
+   MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+   MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")  #app password generated
 
+   SECURITY_POST_RESET_VIEW = "/user_login"
 
-# email configuration
-account_app.config["MAIL_SERVER"] = "smtp.gmail.com"        #specify the gmail smtp server
-account_app.config["MAIL_PORT"] = 587                       #standart port number for TLS-encrypted emails (port to connect to smtp server)
-account_app.config["MAIL_USE_TLS"] = True                   #Transport Layer Security - protects email content&credentials between app and gmail
-account_app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
-account_app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")  #app password generated
-
-mail = Mail(account_app)
+mail = Mail()
+security = Security()
 
 # table for users
 class Users(database.Model, UserMixin):
@@ -48,15 +45,6 @@ class Users(database.Model, UserMixin):
     password = database.Column (database.String(100), nullable = False)
     active = database.Column(database.Boolean())
     fs_uniquifier = database.Column(database.String(255), unique=True, nullable=False)
-
-# configure flask-security
-user_datastore = SQLAlchemyUserDatastore(database, Users, None)
-security = Security()
-security.init_app(account_app, user_datastore, login_form=None,
-                  register_form=None)
-
-# change redirect after reset to login page
-account_app.config["SECURITY_POST_RESET_VIEW"] = "/user_login"
 
 # main page when development server is opened
 @account_app.route("/")
@@ -112,7 +100,8 @@ def post_login():
 
     # successful log-in
     session["user_id"] = current_user.id
-
+    personal_list = Lists.query.filter_by(owner_id=current_user.id, is_collab=False).first()
+    session["active_list"] = personal_list.id
     return jsonify({
         "success": True,
         "message": "Successfully logged-in to your account"
@@ -275,17 +264,22 @@ def signup():
     database.session.add(user)
     database.session.commit()
 
-    session["user_id"] = user.id
+    personal_list = Lists(name = "My Personal List", is_collab = False, owner_id = user.id)
+    database.session.add(personal_list)
+    database.session.commit()
 
+    session["user_id"] = user.id
+    session["active_list"] = personal_list.id
+    
     return jsonify({
         "success": True,
         "message": "Account Successfully Created"
     })
 
 # if this file is run directly:
-if __name__ == "__main__":
-    # create the tables if they dont exist yet
-    with account_app.app_context():
-        database.create_all()
-    # start the flask development server
-    account_app.run(debug = True)
+# if __name__ == "__main__":
+#     # create the tables if they dont exist yet
+#     with account_app.app_context():
+#         database.create_all()
+#     # start the flask development server
+#     account_app.run(debug = True)

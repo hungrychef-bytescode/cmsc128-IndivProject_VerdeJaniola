@@ -1,11 +1,16 @@
-# ignore database
-task.db
+# ignore instance folder
+instance/
+
 # ignore environment variables file
 .env
+
 # ignore Python cache files
 __pycache__/
 *.py[cod]
 *$py.class
+
 .vscode/
+
+# ignor virtual environment
 venv/
 myenv/
