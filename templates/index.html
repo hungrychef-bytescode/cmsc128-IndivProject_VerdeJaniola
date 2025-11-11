@@ -14,7 +14,7 @@
     </head>
 
     <body style="background-image: url('/my_images/paperlab1.jpg');">
-        <h1>TO DO LIST:</h1>                             
+        <h1>TO DO LIST: <span class="current-list-name" id="currentListName">My Tasks</span></h1>                             
         <h2>NAME: Angel May Janiola & Myra Verde</h2> 
         <h3>SUBJECT: CMSC 128-1 Lab 1</h3>
 
@@ -23,6 +23,15 @@
         <img src="/my_images/goodjob.png" alt="Computer" class=goodjob>
         <img src="/my_images/hellokitty.png" alt="Computer" class=hellokitty>
         <img src="/my_images/miaw.png" alt="Computer" class=miaw>
+
+        <!-- Collaboration Controls -->
+        <div class="collab-controls">
+            <select class="list-selector" id="listSelector" onchange="switchListFromSelector()">
+                <option value="">Loading lists...</option>
+            </select>
+            <button class="collab-btn primary" onclick="openCreateListModal()">+ New List</button>
+            <button class="collab-btn primary" onclick="openMembersModal()">👥 Members</button>
+        </div>
 
         <!-- Input Section -->
         <div class="input-container">
@@ -50,5 +59,48 @@
 
         <ul id="task-list"></ul>
         <button type = "button" id = "log-out-btn">Log Out</button>
+
+        <!-- Create List Modal -->
+        <div class="modal" id="createListModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Create New List</h2>
+                    <button class="close-btn" onclick="closeModal('createListModal')">&times;</button>
+                </div>
+                <div class="form-group">
+                    <label>List Name</label>
+                    <input type="text" id="newListName" placeholder="e.g., Work Tasks, Personal Goals" />
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isCollabCheckbox" />
+                        Make this a collaborative list (others can see and edit)
+                    </label>
+                </div>
+                <button class="collab-btn success" onclick="createList()">Create List</button>
+            </div>
+        </div>
+
+        <!-- Members Modal -->
+        <div class="modal" id="membersModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Manage Members</h2>
+                    <button class="close-btn" onclick="closeModal('membersModal')">&times;</button>
+                </div>
+                
+                <div class="form-group">
+                    <label>Add Member (by username)</label>
+                    <div class="add-member-form">
+                        <input type="text" id="memberUsername" placeholder="Enter username" />
+                        <button class="collab-btn success" onclick="addMember()">Add</button>
+                    </div>
+                </div>
+
+                <div class="member-list" id="memberList">
+                    <p style="text-align: center; color: #999;">Loading members...</p>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
