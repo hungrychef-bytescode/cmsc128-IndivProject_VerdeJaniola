@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 20px;
     background-color: #f8f9fa;
-    background-image: url('\my_images\paperlab1.jpg');
+    background-size: cover;
 }
 
 h1 {
@@ -11,7 +11,7 @@ h1 {
     font-size: 40px;
     font-weight: bold;
     font-style: italic;
-    margin-top: 22px;
+    margin-top: 90px;
     margin-left: 175px;
     position: relative; 
     top: 30px;  
@@ -711,4 +711,277 @@ h3 {
         width: 95%;
         padding: 20px;
     }
+
+    /* ========================================
+   COLLABORATIVE FEATURES STYLES
+   Add these to your task_style.css file
+   ======================================== */
+
+/* List selector and controls */
+.collab-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 800px;
+    flex-wrap: wrap;
+}
+
+.list-selector {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 15px;
+    border: 2px solid #ec7fb1;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.list-selector:hover {
+    border-color: #d865a0;
+    box-shadow: 0 2px 8px rgba(236, 127, 177, 0.2);
+}
+
+.list-selector:focus {
+    outline: none;
+    border-color: #d865a0;
+    box-shadow: 0 0 0 3px rgba(236, 127, 177, 0.1);
+}
+
+.collab-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.collab-btn.primary {
+    background: #ec7fb1;
+    color: white;
+}
+
+.collab-btn.primary:hover {
+    background: #d865a0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(236, 127, 177, 0.3);
+}
+
+.collab-btn.success {
+    background: #4caf50;
+    color: white;
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.collab-btn.success:hover {
+    background: #45a049;
+}
+
+/* Current list name display */
+.current-list-name {
+    color: #ec7fb1;
+    font-weight: 600;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 22px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus {
+    outline: none;
+    border-color: #ec7fb1;
+    box-shadow: 0 0 0 3px rgba(236, 127, 177, 0.1);
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+/* Add member form */
+.add-member-form {
+    display: flex;
+    gap: 10px;
+}
+
+.add-member-form input {
+    flex: 1;
+}
+
+.add-member-form button {
+    padding: 12px 20px;
+    white-space: nowrap;
+}
+
+/* Member list */
+.member-list {
+    margin-top: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.member-item {
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+}
+
+.member-item:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.member-item span {
+    color: #333;
+    font-size: 14px;
+}
+
+/* Scrollbar styling for modal */
+.modal-content::-webkit-scrollbar,
+.member-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track,
+.member-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb,
+.member-list::-webkit-scrollbar-thumb {
+    background: #ec7fb1;
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover,
+.member-list::-webkit-scrollbar-thumb:hover {
+    background: #d865a0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .collab-controls {
+        flex-direction: column;
+    }
+    
+    .list-selector {
+        width: 100%;
+    }
+    
+    .collab-btn {
+        width: 100%;
+    }
+    
+    .add-member-form {
+        flex-direction: column;
+    }
+    
+    .add-member-form button {
+        width: 100%;
+    }
+}
 }
