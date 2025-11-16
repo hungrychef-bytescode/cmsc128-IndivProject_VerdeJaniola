@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <meta name = "authors" content = "Angel Mae Janiola, Myra Verde">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    </head>
+    <body>
+        <div class="login-container"> 
+
+            <div class="login-intro">
+                <h1>Welcome Back</h1>
+                <p>Log in to your account</p>
+            </div>
+            <form id="login-form">
+                <label for="login-id">Username or Email</label>
+                <input type="text" id="login-id" name="login_id" placeholder="ex. jcruz@gmail.com or jcruz" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="enter your password"required minlength="8">
+                <button type="submit">Log in</button>
+            </form>
+            <a href="{{ url_for('security.forgot_password') }}">Forgot Password?</a>
+            <button type="button" id="signup-link">Don't have an account? Sign Up</button>
+        </div>
+    </body>
+</html>

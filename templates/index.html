@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+        <title>TO DO list</title>
+        <meta name="authors" content="Myra Verde, Angel May Janiola"/>
+        <meta name="date-created" content="2025-09-08"/>
+        <meta name="description" content="A to do list web app that helps user manage tasks. CRUD operations and other expanded features included (priority, timestamp, sort, etc.)"/>
+        <meta name="keywords" content="to do list, tasks, productivity, deadlines, time management"/>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='task_style.css') }}"/>
+        <script src="{{ url_for('static', filename='task_script.js') }}" defer></script>
+    </head>
+
+    <body style="background-image: url('/my_images/paperlab1.jpg');">            
+        <h1>TO DO LIST: <span class="current-list-name" id="currentListName">My Tasks</span></h1>            
+        <!-- <h2>NAME: Angel May Janiola & Myra Verde</h2> 
+        <h3>SUBJECT: CMSC 128-1 Lab 1</h3> -->
+
+        <img src="/my_images/iloveu.png" alt="Computer" class=iloveu>
+        <img src="/my_images/cool.png" alt="Computer" class=cool>
+        <img src="/my_images/goodjob.png" alt="Computer" class=goodjob>
+        <img src="/my_images/hellokitty.png" alt="Computer" class=hellokitty>
+        <img src="/my_images/miaw.png" alt="Computer" class=miaw>
+
+        <div class="collab-controls">
+            <select class="list-selector" id="listSelector" onchange="switchListFromSelector()">
+                <option value="">Loading lists...</option>
+            </select>
+            <button class="collab-btn primary" onclick="openCreateListModal()">+ New List</button>
+            <button class="collab-btn primary" onclick="openMembersModal()">👥 Members</button>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-container">
+            <div class="input-row">
+                <input type="text" id="task" placeholder="add your task"/>
+                <input type="datetime-local" id="deadline"/>
+                <select id="priority">
+                    <option value="Low">Low</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="High">High</option>
+                </select>
+                <button type="button" id="addBtn">Add</button>
+            </div>
+        </div>
+
+        <!-- Sort Section -->
+        <div class="sort-container">
+            <label>Sort by:</label>
+            <select id="sortBy">
+                <option value="timestamp">Date Added</option>
+                <option value="priority">Priority</option>
+                <option value="due_date">Due Date</option>
+            </select>
+        </div>
+
+        <ul id="task-list"></ul>
+    
+        <div class="modal" id="createListModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Create New List</h2>
+                    <button class="close-btn" onclick="closeModal('createListModal')">&times;</button>
+                </div>
+                <div class="form-group">
+                    <label>List Name</label>
+                    <input type="text" id="newListName" placeholder="e.g., Work Tasks, Personal Goals" />
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isCollabCheckbox" />
+                        Make this a collaborative list (others can see and edit)
+                    </label>
+                </div>
+                <button class="collab-btn success" onclick="createList()">Create List</button>
+            </div>
+        </div>
+
+        <!-- Members Modal -->
+        <div class="modal" id="membersModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Manage Members</h2>
+                    <button class="close-btn" onclick="closeModal('membersModal')">&times;</button>
+                </div>
+
+                <div class="form-group">
+                    <label>Add Member (by username)</label>
+                    <div class="add-member-form">
+                        <input type="text" id="memberUsername" placeholder="Enter username" />
+                        <button class="collab-btn success" onclick="addMember()">Add</button>
+                    </div>
+                </div>
+
+                <div class="member-list" id="memberList">
+                    <p style="text-align: center; color: #999;">Loading members...</p>
+                </div>
+            </div>
+        </div>
+
+        <button type = "button" id = "log-out-btn">Log Out</button>
+
+    </body>
+</html>

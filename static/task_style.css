@@ -1,0 +1,714 @@
+body {
+    font-family: "Comic Sans MS", "Brush Script MT", cursive;
+    margin: 0;
+    padding: 20px;
+    background-color: #f8f9fa;
+    background-image: url('\my_images\paperlab1.jpg');
+}
+
+h1 {
+    color: BLACK; 
+    font-size: 40px;
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 22px;
+    margin-left: 175px;
+    position: relative; 
+    top: 30px;  
+} 
+
+h2 {
+    color: rgb(48, 44, 44);
+    font-size: 20px;
+    font-style: italic;
+    margin-left: 185px;
+} 
+
+h3 {
+    color: rgb(48, 44, 44);
+    font-size: 20px;
+    font-style: italic;
+    margin-top: -43px;
+    margin-left: 850px;
+} 
+
+/* Sticker positioning */
+.iloveu {
+    position: relative; 
+    top: -220px;   
+    left: 160px;  
+    width: 75px;
+    height: 75px;
+    transform: rotate(-10deg);
+} 
+
+.goodjob {
+    position: relative; 
+    top: -170px;   
+    left: 930px;  
+    width: 105px;
+    height: 105px;
+    transform: rotate(25deg);
+}
+
+.cool {
+    position: relative; 
+    top: -160px;   
+    left: -25px;  
+    width: 125px;
+    height: 125px;
+    transform: rotate(-5deg);
+}
+
+.hellokitty {
+    position: relative; 
+    top: -175px;   
+    left: 740px;  
+    width: 75px;
+    height: 75px;
+    transform: rotate(-15deg);
+}
+
+.miaw {
+    position: relative; 
+    top: -130px;   
+    left: -310px;  
+    width: 80px;
+    height: 80px;
+    transform: rotate(-15deg);
+}
+
+/* ===== COLLABORATION CONTROLS ===== */
+/* Current list indicator */
+.current-list-name {
+    display: inline-block;
+    background: rgba(225, 255, 141, 0.897);
+    color: #000;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 10px;
+    border: 2px solid #5f6061;
+}
+
+/* Collaboration controls container */
+.collab-controls {
+    position: relative;
+    top: -120px;
+    left: 180px;
+    max-width: 920px;
+    background-color: rgba(255, 200, 220, 0.9);
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 2px solid #5f6061;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* List selector dropdown */
+.list-selector {
+    flex: 1;
+    min-width: 250px;
+    padding: 10px;
+    height: 45px;
+    border: 2px solid #5f6061;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.list-selector:focus {
+    outline: none;
+    border-color: #e476a4;
+}
+
+/* Collaboration buttons */
+.collab-btn {
+    padding: 10px 18px;
+    height: 45px;
+    border: 2px solid #5f6061;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.collab-btn.primary {
+    background: #c997c1;
+    color: white;
+}
+
+.collab-btn.primary:hover {
+    background: #b57fb5;
+}
+
+.collab-btn.success {
+    background: #10b981;
+    color: white;
+}
+
+.collab-btn.success:hover {
+    background: #059669;
+}
+
+/* ===== INPUT CONTAINER ===== */
+.input-container {
+    position: relative;
+    top: -125px;
+    left: 180px;
+    max-width: 920px;
+    background-color: rgba(225, 255, 141, 0.897);
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #5f6061;
+}
+
+.input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.input-container input[type="text"] {
+    flex: 1;
+    min-width: 250px;
+    padding: 8px;
+    height: 30px;
+    border: 2px solid #5f6061; 
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #000;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.input-container input[type="datetime-local"] {
+    padding: 8px;
+    height: 30px;
+    border: 2px solid #5f6061;
+    border-radius: 5px;
+    background-color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    min-width: 180px;
+}
+
+.input-container select {
+    padding: 8px;
+    height: 50px;
+    border: 2px solid #5f6061;
+    border-radius: 5px;
+    background-color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.input-container button {
+    padding: 8px 15px;
+    height: 50px;
+    border: 2px solid #5f6061;  
+    background-color: #e476a4;   
+    color: #ffffff;   
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.input-container button:hover {
+    background-color: #d165a0;   
+}
+
+/* ===== SORT CONTAINER ===== */
+.sort-container {
+    position: relative;
+    top: -115px;
+    left: 180px;
+    max-width: 920px;
+    background-color: rgba(115, 255, 150, 0.863);
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 2px solid #5f6061;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.sort-container label {
+    font-size: 16px;
+    color: #000;
+}
+
+.sort-container select {
+    padding: 6px 10px;
+    border: 2px solid #5f6061;
+    border-radius: 5px;
+    background-color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sort-container button {
+    padding: 6px 15px;
+    border: 2px solid #5f6061;  
+    background-color: #e476a4;   
+    color: rgb(255, 250, 250);   
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.sort-container button:hover {
+    background-color: #8fbc8f;
+}
+
+/* ===== TASK LIST ===== */
+#task-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#task-list li {  
+    position: relative;
+    left: 180px;
+    top: -110px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    color: #000;         
+    font-weight: 500;
+    background-color: rgba(200, 238, 255, 0.692);
+    max-width: 940px;
+    padding: 5px;
+    border-radius: 8px;
+    border: 2px solid #5f6061;
+    gap: 10px;
+}
+
+#task-list li:hover {
+    background-color: rgba(56, 192, 197, 0.486);
+}
+
+/* Checkbox styling */
+#task-list li input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Task text */
+#task-list li .task-text {
+    flex-grow: 1;
+    margin-right: 10px;
+    word-wrap: break-word;
+}
+
+.deadline-input {
+    border: none;
+    background: transparent;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    width: auto;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Priority badge */
+.priority-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.priority-high {
+    background-color: #ffb3b3;
+    color: #8b0000;
+    border: 2px solid #ff9999;
+}
+
+.priority-medium {
+    background-color: #ffd4a3;
+    color: #b35900;
+    border: 2px solid #ffb366;
+}
+
+.priority-low {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+    border: 2px solid #81c784;
+}
+
+/* Deadline display */
+.deadline-display {
+    font-size: 13px;
+    color: #6c757d;
+    white-space: nowrap;
+}
+
+/* Task actions container */
+#task-list li .task-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Button styling for task actions */
+#task-list li button {
+    padding: 6px 12px;
+    border: 2px solid #5f6061;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 60px;
+    height: 28px;
+}
+
+/* Edit button */
+#task-list li .btn-edit {
+    background-color: #deb4d6;
+    border-color: #c997c1;
+}
+
+#task-list li .btn-edit:hover {
+    background-color: #c997c1;
+}
+
+/* Delete button */
+#task-list li .btn-delete {
+    background-color: #ffb3b3;
+    border-color: #ff9999;
+}
+
+#task-list li .btn-delete:hover {
+    background-color: #ff9999;
+}
+
+/* Completed task styling */
+#task-list li.completed {
+    opacity: 0.7;
+    background-color: rgba(248, 249, 250, 0.8);
+}
+
+#task-list li.completed .task-text {
+    text-decoration: line-through;
+    color: #6c757d;
+}
+
+/* ===== MODAL STYLES ===== */
+/* Modal overlay */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+/* Modal content box */
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border: 3px solid #e476a4;
+}
+
+/* Modal header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.modal-header h2 {
+    color: #e476a4;
+    margin: 0;
+    font-family: inherit;
+}
+
+/* Close button */
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+    color: #999;
+    line-height: 1;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+}
+
+.close-btn:hover {
+    color: #e476a4;
+}
+
+/* Form groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-family: inherit;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #5f6061;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: white;
+}
+
+.form-group input[type="text"]:focus {
+    outline: none;
+    border-color: #e476a4;
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Add member form */
+.add-member-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.add-member-form input {
+    flex: 1;
+}
+
+/* Member list */
+.member-list {
+    margin-top: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.member-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: rgba(225, 255, 141, 0.5);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 2px solid #5f6061;
+}
+
+.member-info {
+    flex: 1;
+}
+
+.member-name {
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 3px;
+    font-family: inherit;
+}
+
+.member-email {
+    font-size: 12px;
+    color: #6c757d;
+    font-family: inherit;
+}
+
+/* Owner badge */
+.owner-badge {
+    background: #e476a4;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: bold;
+    border: 2px solid #d165a0;
+}
+
+/* Remove member button */
+.remove-member-btn {
+    background: #ffb3b3;
+    color: #8b0000;
+    border: 2px solid #ff9999;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+.remove-member-btn:hover {
+    background: #ff9999;
+}
+
+/* ===== TOAST NOTIFICATION ===== */
+.toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(20px);
+    background-color: #e476a4;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 15px;
+    font-family: "Comic Sans MS", "Brush Script MT", cursive;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(228, 118, 164, 0.3);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border: 2px solid #fff;
+}
+
+/* ===== LOGOUT BUTTON ===== */
+#log-out-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #e476a4;
+    color: white;
+    border: 2px solid #5f6061;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+#log-out-btn:hover {
+    background-color: #d165a0;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1200px) {
+    h3 {
+        margin-left: 600px;
+    }
+    
+    .collab-controls {
+        left: 100px;
+        max-width: calc(100% - 200px);
+    }
+    
+    .input-container,
+    .sort-container {
+        left: 100px;
+        max-width: calc(100% - 200px);
+    }
+    
+    #task-list li {
+        left: 110px;
+        max-width: calc(100% - 220px);
+    }
+    
+    .goodjob {
+        left: 680px;
+    }
+    
+    .hellokitty {
+        left: 540px;
+    }
+}
+
+@media (max-width: 900px) {
+    .collab-controls {
+        left: 50px;
+        max-width: calc(100% - 100px);
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .list-selector {
+        width: 100%;
+    }
+    
+    .collab-btn {
+        width: 100%;
+    }
+    
+    .input-container,
+    .sort-container {
+        left: 50px;
+        max-width: calc(100% - 100px);
+    }
+
+    #task-list li {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        left: 50px;
+        max-width: calc(100% - 100px);
+    }
+    
+    #task-list li .task-actions {
+        width: 100%;
+    }
+    
+    #task-list li button {
+        flex: 1;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+}
