@@ -1,4 +1,4 @@
-from flask import Flask, make_response
+from flask import Flask
 from account import account_app, Config, mail, security, Users
 from flask_security import SQLAlchemyUserDatastore
 from collab import collab_app

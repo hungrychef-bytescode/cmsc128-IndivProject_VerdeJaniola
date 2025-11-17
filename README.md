@@ -29,3 +29,20 @@ for PROFILE UPDATE /update_profile
 for PASSWORD UPDATE /update_password
 for LOGOUT /logout
 for PASSWORD RESET (flask-security) /reset, /reset/<token>
+
+Activity 3 Multi-Account
+
+For Activity 3, we expound and added features from our Lab 1 and Lab 2 activity. The database used is still SQLITE and FLASK as backend.
+
+
+HOW TO RUN:
+Set up the environment and install the necessary dependencies (pip install Flask Flask-SQLAlchemy Flask-Security-Too Flask-Mail python-dotenv Blueprint). Run "python main.py" and go to the http://127.0.0.1:5000 link provided in the terminal. Sign-up for an account, log-in, manage your personal tasks, create your own collab lists and access lists that you're part of.
+
+EXAMPLE API endpoints: 
+Aside from the API endpoints used in Lab 1 and 2, we also added:
+
+for SWITCHING ACTIVE LIST /switch_list/<int:list_id>
+for ADDING COLLABORATOR   /add_member
+for VIEWING LISTS         /view_collab_list
+for CREATING A LIST       /create_list
+for GETTING ACTIVE LIST   /get_active_list

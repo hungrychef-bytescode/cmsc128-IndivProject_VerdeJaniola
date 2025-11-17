@@ -35,16 +35,16 @@ def add_member():
             "message": "List ID and username/email are required"
         })
     
-    list_item = Lists.query.get(list_id)
+    list_details = Lists.query.get(list_id)
     
     # Only owner can add members
-    if list_item.owner_id != current_user_id:
+    if list_details.owner_id != current_user_id:
         return jsonify({
             "success": False,
             "message": "Only the list owner can add members"
         })
     
-    if not list_item.is_collab:
+    if not list_details.is_collab:
         return jsonify({
             "success": False,
             "message": "Cannot add members to a personal list"
@@ -87,7 +87,7 @@ def add_member():
     
     return jsonify({
         "success": True,
-        "message": f"Successfully added {user_to_add.username} to {list_item.name}"
+        "message": f"Successfully added {user_to_add.username} to {list_details.name}"
     })
 
 
@@ -122,7 +122,6 @@ def view_lists():
     member_records = CollabMembers.query.filter_by(member_id=current_user_id).all()
     member_list_ids = [record.list_id for record in member_records]
     member_collab_lists = Lists.query.filter(Lists.id.in_(member_list_ids)).all()
-    
 
     
     #format list info where user is added as collaborator
