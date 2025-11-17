@@ -2,6 +2,8 @@ from functools import wraps
 from flask import session, jsonify
 from database import Lists, CollabMembers
 
+# decorator - modify functions without changing its code
+
 def login_required(f):
     @wraps(f)
     def wrapper(*args, **kwargs):

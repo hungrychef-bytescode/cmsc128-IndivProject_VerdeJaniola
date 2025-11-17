@@ -9,21 +9,14 @@ collab_app = Blueprint("collab", __name__)
 @collab_app.route("/switch_list/<int:list_id>", methods=["POST"])
 @login_required
 @list_access
-def switch_list(list_id):
-
-    # Check if list exists and user has access to it
-    list_item = Lists.query.get(list_id)
-    
+def switch_list(list_id):    
     # Switch to the selected list
     session["active_list"] = list_id
 
-    
     return jsonify({
         "success": True,
-        # "message": f"Switched to list: {list_item.name}",
-        "list_name": list_item.name
+        "list_name": Lists.query.get(list_id).name
     })
-
 
 # 2. Route for adding other users to Collaborative List
 @collab_app.route("/add_member", methods=["POST"])
@@ -49,7 +42,7 @@ def add_member():
         return jsonify({
             "success": False,
             "message": "Only the list owner can add members"
-        }), 403
+        })
     
     if not list_item.is_collab:
         return jsonify({
@@ -102,20 +95,16 @@ def add_member():
 @login_required
 @collab_app.route("/view_collab_lists", methods=["GET"])
 def view_lists():
+    # get logged in user id
     current_user_id = session.get("user_id")
     
-    # Get lists where user is owner
-    owned_collab_lists = Lists.query.filter_by(
-        owner_id=current_user_id,
+    #get collab lists owned by user
+    owned_collab_lists = Lists.query.filter_by( 
+        owner_id=current_user_id, 
         is_collab=True
     ).all()
     
-    # Get lists where user is a member
-    member_records = CollabMembers.query.filter_by(member_id=current_user_id).all()
-    member_list_ids = [record.list_id for record in member_records]
-    member_collab_lists = Lists.query.filter(Lists.id.in_(member_list_ids)).all()
-    
-    # Format owned lists
+    #format owned lists info
     owned_lists_data = []
     for lst in owned_collab_lists:
         members = CollabMembers.query.filter_by(list_id=lst.id).all()
@@ -124,14 +113,21 @@ def view_lists():
         owned_lists_data.append({
             "id": lst.id,
             "name": lst.name,
-            "is_owner": True,
             "owner": Users.query.get(lst.owner_id).username,
             "members": member_usernames,
             "member_count": len(member_usernames)
         })
+
+    # Get lists where user is a member
+    member_records = CollabMembers.query.filter_by(member_id=current_user_id).all()
+    member_list_ids = [record.list_id for record in member_records]
+    member_collab_lists = Lists.query.filter(Lists.id.in_(member_list_ids)).all()
     
-    # Format member lists
+
+    
+    #format list info where user is added as collaborator
     member_lists_data = []
+
     for lst in member_collab_lists:
         members = CollabMembers.query.filter_by(list_id=lst.id).all()
         member_usernames = [Users.query.get(m.member_id).username for m in members]
@@ -142,20 +138,18 @@ def view_lists():
             "is_owner": False,
             "owner": Users.query.get(lst.owner_id).username,
             "members": member_usernames,
-            "member_count": len(member_usernames)
         })
     
-    # Get personal list too
+    #get personal lists
     personal_lists = Lists.query.filter_by(
         owner_id=current_user_id,
         is_collab=False
     ).all()
 
-
-    
-    personal_list_data = []
+    # info for each personal list
+    personal_lists_data = []
     for lst in personal_lists:
-        personal_list_data.append({ 
+        personal_lists_data.append({ 
             "id": lst.id, 
             "name": lst.name, 
             "is_owner": True
@@ -163,7 +157,7 @@ def view_lists():
 
     return jsonify({
         "success": True,
-        "personal_lists": personal_list_data,
+        "personal_lists": personal_lists_data,
         "owned_collab_lists": owned_lists_data,
         "member_collab_lists": member_lists_data,
         "total_collab_lists": len(owned_lists_data) + len(member_lists_data)
@@ -206,6 +200,7 @@ def create_list():
 @login_required
 @list_access
 def get_active_list():
+    # get logged-in user and selected list
     current_user_id = session.get("user_id")
     active_list_id = session.get("active_list")
     
@@ -219,6 +214,7 @@ def get_active_list():
         "is_collab": active_list.is_collab,
         "is_owner": active_list.owner_id == current_user_id
     }) 
+    
     else:
         return jsonify({
             "success": False,
