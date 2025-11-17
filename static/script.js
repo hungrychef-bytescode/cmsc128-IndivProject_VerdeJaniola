@@ -5,12 +5,19 @@ const passwordForm = document.getElementById("password-form")
 const logoutBtn = document.getElementById("log-out-btn")
 const loginBtn = document.getElementById("login-btn")
 const signupBtn = document.getElementById("signup-link")
+const backBtn = document.getElementById("back-btn");
 
 
 if (loginBtn){
     loginBtn.addEventListener("click", ()=> {
         window.location.href = "/user_login";
     })
+}
+
+if (backBtn) {
+    backBtn.addEventListener("click", () => {
+        window.location.href = "/index";}
+    )
 }
 
 

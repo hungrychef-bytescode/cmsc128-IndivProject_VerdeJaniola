@@ -13,7 +13,8 @@
         <script src="{{ url_for('static', filename='task_script.js') }}" defer></script>
     </head>
 
-    <body style="background-image: url('/my_images/paperlab1.jpg');">            
+    <body>    
+        <h6></h6>        
         <h1>TO DO LIST: <span class="current-list-name" id="currentListName">My Tasks</span></h1>            
         <!-- <h2>NAME: Angel May Janiola & Myra Verde</h2> 
         <h3>SUBJECT: CMSC 128-1 Lab 1</h3> -->
@@ -23,6 +24,12 @@
         <img src="/my_images/goodjob.png" alt="Computer" class=goodjob>
         <img src="/my_images/hellokitty.png" alt="Computer" class=hellokitty>
         <img src="/my_images/miaw.png" alt="Computer" class=miaw>
+
+
+        <button id = "view-profile">
+            <img src  = "/my_images/account.svg" alt = "account icon" id = "account-icon">
+            Profile
+        </button>
 
         <div class="collab-controls">
             <select class="list-selector" id="listSelector" onchange="switchListFromSelector()">
