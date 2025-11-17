@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const addTaskBtn = document.getElementById("addBtn");
 const logoutBtn = document.getElementById("log-out-btn")
+const profileBtn = document.getElementById("view-profile")
 
 addTaskBtn.addEventListener("click", addTask);
 
@@ -55,6 +56,12 @@ if (logoutBtn) {
     });
 }
 
+if (profileBtn) {
+    profileBtn.addEventListener("click", () => {
+        window.location.href = "/profile";}
+    )
+}
+
 async function addTask() {
     const taskInput = document.getElementById("task");
     const dueDateInput = document.getElementById("deadline");
@@ -65,7 +72,7 @@ async function addTask() {
     const priority = prioritySelect.value;
     
     if (!task) {
-        alert("No task added. Please add a task.");
+        showToast("No task added. Please add a task.");
         return;
     }
 
@@ -171,7 +178,7 @@ function createDeleteButton(task, li){
                 li.remove();
                 showToast("Task deleted successfully");
             } else {
-                alert(result.error || "Failed to delete task.");
+                showToast(result.error || "Failed to delete task.");
             }
         } catch (err) {
             console.error("Failed to delete task:", err);
@@ -358,7 +365,7 @@ function createTaskText(task, li) {
           showToast("Task updated!");
         } catch (err) {
           console.error("Error updating task:", err);
-          alert("Could not update task. Try again.");
+          showToast("Could not update task. Try again.");
         }
       }
 
@@ -449,3 +456,351 @@ function showToast(message) {
         }, 300);
     }, 1500);
 }
+
+// ========================================
+// COLLABORATIVE LIST FUNCTIONS
+// ========================================
+
+// Load all lists on page load
+document.addEventListener("DOMContentLoaded", function () {
+    loadAllLists();
+    loadActiveListInfo();
+});
+
+//on list selector dropdown
+async function loadAllLists() {
+    try {
+        const response = await fetch("/view_collab_lists", {
+            method: "GET",
+            credentials: "include"
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+            showListSelector(result);
+        } else {
+            console.error("Failed to load lists:", result.message);
+        }
+    } catch (error) {
+        console.error("Error loading lists:", error);
+    }
+}
+
+// Populate the dropdown with all available lists
+function showListSelector(data) {
+    const selector = document.getElementById("listSelector");
+    selector.innerHTML = "";
+
+    //personal lists
+    if (data.personal_lists && data.personal_lists.length > 0) {
+        const personalGroup = document.createElement("optgroup");
+        personalGroup.label = "My Personal Lists";
+
+        data.personal_lists.forEach(lst => {
+            const option = document.createElement("option");
+            option.value = lst.id;
+            option.textContent = `📋 ${lst.name} (Personal)`;
+            personalGroup.appendChild(option);
+        });
+
+        selector.appendChild(personalGroup);
+    }
+
+    //owned collaborative lists
+    if (data.owned_collab_lists && data.owned_collab_lists.length > 0) {
+        const ownedGroup = document.createElement("optgroup");
+        ownedGroup.label = "My Collaborative Lists";
+        
+        data.owned_collab_lists.forEach(list => {
+            const option = document.createElement("option");
+            option.value = list.id;
+            option.textContent = `👥 ${list.name} (${list.member_count} members)`;
+            ownedGroup.appendChild(option);
+        });
+        
+        selector.appendChild(ownedGroup);
+    }
+
+    //lists where user is a member
+    if (data.member_collab_lists && data.member_collab_lists.length > 0) {
+        const memberGroup = document.createElement("optgroup");
+        memberGroup.label = "Shared With Me";
+        
+        data.member_collab_lists.forEach(list => {
+            const option = document.createElement("option");
+            option.value = list.id;
+            option.textContent = `👥 ${list.name} (by ${list.owner})`;
+            memberGroup.appendChild(option);
+        });
+        
+        selector.appendChild(memberGroup);
+    }
+
+    // Set the current active list as selected
+    loadActiveListInfo();
+}
+
+// Get current active list info and update UI
+async function loadActiveListInfo() {
+    try {
+        const response = await fetch("/get_active_list", {
+            method: "GET",
+            credentials: "include"
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+            // Update the list name display
+            const listNameDisplay = document.getElementById("currentListName");
+            if (listNameDisplay) {
+                listNameDisplay.textContent = result.list_name;
+            }
+
+            // Set the selector to the active list
+            const selector = document.getElementById("listSelector");
+            if (selector) {
+                selector.value = result.list_id;
+            }
+
+            // Show/hide members button based on if it's a collab list
+            const membersBtn = document.querySelector('button[onclick="openMembersModal()"]');
+            if (membersBtn) {
+                if (result.is_collab && result.is_owner) {
+                    membersBtn.style.display = "inline-block";
+                } else {
+                    membersBtn.style.display = "none";
+                }
+            }
+        }
+    } catch (error) {
+        console.error("Error loading active list:", error);
+    }
+}
+
+// Switch to a different list
+async function switchListFromSelector() {
+    const selector = document.getElementById("listSelector");
+    const listId = selector.value;
+
+    if (!listId) return;
+
+    try {
+        const response = await fetch(`/switch_list/${listId}`, {
+            method: "POST",
+            credentials: "include"
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showToast(`Switched to: ${result.list_name}`);
+            
+            // Update the list name display
+            const listNameDisplay = document.getElementById("currentListName");
+            if (listNameDisplay) {
+                listNameDisplay.textContent = result.list_name;
+            }
+
+            // Reload tasks for the new list
+            getTasks();
+            
+            // Update members button visibility
+            loadActiveListInfo();
+        } else {
+            showToast(result.message || "Failed to switch list");
+            loadAllLists(); // Reload to reset selector
+        }
+    } catch (error) {
+        console.error("Error switching list:", error);
+        showToast("Failed to switch list");
+    }
+}
+
+// Open create list modal
+function openCreateListModal() {
+    const modal = document.getElementById("createListModal");
+    modal.style.display = "flex";
+    
+    // Clear previous input
+    document.getElementById("newListName").value = "";
+    document.getElementById("isCollabCheckbox").checked = false;
+}
+
+// Close modal
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.display = "none";
+}
+
+// Create a new list
+async function createList() {
+    const listName = document.getElementById("newListName").value.trim();
+    const isCollab = document.getElementById("isCollabCheckbox").checked;
+
+    if (!listName) {
+        showToast("Please enter a list name");
+        return;
+    }
+
+    try {
+        const response = await fetch("/create_list", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+                list_name: listName,
+                is_collab: isCollab
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showToast("List created successfully!");
+            closeModal("createListModal");
+            
+            // Reload all lists and switch to the new one
+            await loadAllLists();
+            
+            // The new list is now active, so reload tasks
+            getTasks();
+            loadActiveListInfo();
+        } else {
+            showToast(result.message || "Failed to create list");
+        }
+    } catch (error) {
+        console.error("Error creating list:", error);
+        showToast("Failed to create list");
+    }
+}
+
+// Open members modal
+async function openMembersModal() {
+    const modal = document.getElementById("membersModal");
+    modal.style.display = "flex";
+    
+    // Clear input
+    document.getElementById("memberUsername").value = "";
+    
+    // Load current members
+    await loadMembers();
+}
+
+//load members of current list
+async function loadMembers() {
+    const memberList = document.getElementById("memberList");
+    memberList.innerHTML = '<p style="text-align: center; color: #999;">Loading members...</p>';
+
+    try {
+        const response = await fetch("/view_collab_lists", {
+            method: "GET",
+            credentials: "include"
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Get the active list info
+            const activeResponse = await fetch("/get_active_list", {
+                method: "GET",
+                credentials: "include"
+            });
+            
+            const activeResult = await activeResponse.json();
+            
+            if (activeResult.success) {
+                const activeListId = activeResult.list_id;
+                
+                // Find the active list in owned lists
+                const activeList = result.owned_collab_lists.find(list => list.id === activeListId);
+                
+                if (activeList && activeList.members && activeList.members.length > 0) {
+                    memberList.innerHTML = "";
+                    
+                    activeList.members.forEach(username => {
+                        const memberDiv = document.createElement("div");
+                        memberDiv.className = "member-item";
+                        memberDiv.innerHTML = `
+                            <span>👤 ${username}</span>
+                        `;
+                        memberList.appendChild(memberDiv);
+                    });
+                } else {
+                    memberList.innerHTML = '<p style="text-align: center; color: #999;">No members yet. Add someone!</p>';
+                }
+            }
+        }
+    } catch (error) {
+        console.error("Error loading members:", error);
+        memberList.innerHTML = '<p style="text-align: center; color: #f44336;">Failed to load members</p>';
+    }
+}
+
+// Add a member to the current list
+async function addMember() {
+    const usernameInput = document.getElementById("memberUsername");
+    const username = usernameInput.value.trim();
+
+    if (!username) {
+        showToast("Please enter a username or email");
+        return;
+    }
+
+    try {
+        // Get current active list
+        const activeResponse = await fetch("/get_active_list", {
+            method: "GET",
+            credentials: "include"
+        });
+        
+        const activeResult = await activeResponse.json();
+        
+        if (!activeResult.success) {
+            showToast("Could not get current list");
+            return;
+        }
+
+        const response = await fetch("/add_member", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+                list_id: activeResult.list_id,
+                username_or_email: username
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showToast("Member added successfully!");
+            usernameInput.value = "";
+            
+            // Reload members list
+            await loadMembers();
+            
+            // Reload all lists to update member count
+            await loadAllLists();
+        } else {
+            showToast(result.message || "Failed to add member");
+        }
+    } catch (error) {
+        console.error("Error adding member:", error);
+        showToast("Failed to add member");
+    }
+}
+
+// Close modal when clicking outside
+window.addEventListener("click", (event) => {
+    const createModal = document.getElementById("createListModal");
+    const membersModal = document.getElementById("membersModal");
+    
+    if (event.target === createModal) {
+        closeModal("createListModal");
+    }
+    if (event.target === membersModal) {
+        closeModal("membersModal");
+    }
+});
