@@ -72,7 +72,7 @@ async function addTask() {
     const priority = prioritySelect.value;
     
     if (!task) {
-        alert("No task added. Please add a task.");
+        showToast("No task added. Please add a task.");
         return;
     }
 
@@ -178,7 +178,7 @@ function createDeleteButton(task, li){
                 li.remove();
                 showToast("Task deleted successfully");
             } else {
-                alert(result.error || "Failed to delete task.");
+                showToast(result.error || "Failed to delete task.");
             }
         } catch (err) {
             console.error("Failed to delete task:", err);
@@ -365,7 +365,7 @@ function createTaskText(task, li) {
           showToast("Task updated!");
         } catch (err) {
           console.error("Error updating task:", err);
-          alert("Could not update task. Try again.");
+          showToast("Could not update task. Try again.");
         }
       }
 
@@ -478,7 +478,7 @@ async function loadAllLists() {
         const result = await response.json();
         
         if (result.success) {
-            populateListSelector(result);
+            showListSelector(result);
         } else {
             console.error("Failed to load lists:", result.message);
         }
@@ -488,16 +488,23 @@ async function loadAllLists() {
 }
 
 // Populate the dropdown with all available lists
-function populateListSelector(data) {
+function showListSelector(data) {
     const selector = document.getElementById("listSelector");
     selector.innerHTML = "";
 
-    // Add personal list
-    if (data.personal_list) {
-        const option = document.createElement("option");
-        option.value = data.personal_list.id;
-        option.textContent = `📋 ${data.personal_list.name} (Personal)`;
-        selector.appendChild(option);
+    // Add personal lists
+    if (data.personal_lists && data.personal_lists.length > 0) {
+        const personalGroup = document.createElement("optgroup");
+        personalGroup.label = "My Personal Lists";
+
+        data.personal_lists.forEach(lst => {
+            const option = document.createElement("option");
+            option.value = lst.id;
+            option.textContent = `📋 ${lst.name} (Personal)`;
+            personalGroup.appendChild(option);
+        });
+
+        selector.appendChild(personalGroup);
     }
 
     // Add owned collaborative lists
@@ -602,12 +609,12 @@ async function switchListFromSelector() {
             // Update members button visibility
             loadActiveListInfo();
         } else {
-            alert(result.message || "Failed to switch list");
+            showToast(result.message || "Failed to switch list");
             loadAllLists(); // Reload to reset selector
         }
     } catch (error) {
         console.error("Error switching list:", error);
-        alert("Failed to switch list");
+        showToast("Failed to switch list");
     }
 }
 
@@ -633,7 +640,7 @@ async function createList() {
     const isCollab = document.getElementById("isCollabCheckbox").checked;
 
     if (!listName) {
-        alert("Please enter a list name");
+        showToast("Please enter a list name");
         return;
     }
 
@@ -661,11 +668,11 @@ async function createList() {
             getTasks();
             loadActiveListInfo();
         } else {
-            alert(result.message || "Failed to create list");
+            showToast(result.message || "Failed to create list");
         }
     } catch (error) {
         console.error("Error creating list:", error);
-        alert("Failed to create list");
+        showToast("Failed to create list");
     }
 }
 
@@ -737,7 +744,7 @@ async function addMember() {
     const username = usernameInput.value.trim();
 
     if (!username) {
-        alert("Please enter a username or email");
+        showToast("Please enter a username or email");
         return;
     }
 
@@ -751,7 +758,7 @@ async function addMember() {
         const activeResult = await activeResponse.json();
         
         if (!activeResult.success) {
-            alert("Could not get current list");
+            showToast("Could not get current list");
             return;
         }
 
@@ -777,11 +784,11 @@ async function addMember() {
             // Reload all lists to update member count
             await loadAllLists();
         } else {
-            alert(result.message || "Failed to add member");
+            showToast(result.message || "Failed to add member");
         }
     } catch (error) {
         console.error("Error adding member:", error);
-        alert("Failed to add member");
+        showToast("Failed to add member");
     }
 }
 

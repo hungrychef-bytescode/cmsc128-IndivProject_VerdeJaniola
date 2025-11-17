@@ -104,10 +104,10 @@ def add_member():
     })
 
 
-# 3. Route for viewing all Collaborative Lists user is part of
+# 3. Route for viewing all Lists
 @login_required
 @collab_app.route("/view_collab_lists", methods=["GET"])
-def view_collab_lists():
+def view_lists():
     current_user_id = session.get("user_id")
     
     # Get lists where user is owner
@@ -152,28 +152,30 @@ def view_collab_lists():
         })
     
     # Get personal list too
-    personal_list = Lists.query.filter_by(
+    personal_lists = Lists.query.filter_by(
         owner_id=current_user_id,
         is_collab=False
-    ).first()
+    ).all()
+
+
     
-    personal_list_data = None
-    if personal_list:
-        personal_list_data = {
-            "id": personal_list.id,
-            "name": personal_list.name,
+    personal_list_data = []
+    for lst in personal_lists:
+        personal_list_data.append({ 
+            "id": lst.id, 
+            "name": lst.name, 
             "is_owner": True
-        }
-    
+        })
+
     return jsonify({
         "success": True,
-        "personal_list": personal_list_data,
+        "personal_lists": personal_list_data,
         "owned_collab_lists": owned_lists_data,
         "member_collab_lists": member_lists_data,
         "total_collab_lists": len(owned_lists_data) + len(member_lists_data)
     })
 
-# Create collaborative list
+# Create new list
 @collab_app.route("/create_list", methods=["POST"])
 @login_required
 def create_list():
