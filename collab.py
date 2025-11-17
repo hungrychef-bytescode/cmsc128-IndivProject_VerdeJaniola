@@ -5,7 +5,6 @@ from database import database, Lists, CollabMembers
 
 collab_app = Blueprint("collab", __name__)
 
-
 # 1. Route for switching between Personal and Collaborative Lists
 @collab_app.route("/switch_list/<int:list_id>", methods=["POST"])
 @login_required
@@ -18,16 +17,11 @@ def switch_list(list_id):
     # Switch to the selected list
     session["active_list"] = list_id
 
-    if list_item.is_collab:
-        list_type = "collaborative"
-    else:
-        list_type = "personal"
     
     return jsonify({
         "success": True,
-        "message": f"Switched to {list_type} list: {list_item.name}",
-        "list_name": list_item.name,
-        "is_collab": list_item.is_collab
+        # "message": f"Switched to list: {list_item.name}",
+        "list_name": list_item.name
     })
 
 

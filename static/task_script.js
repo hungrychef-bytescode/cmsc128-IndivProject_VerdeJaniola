@@ -492,7 +492,7 @@ function showListSelector(data) {
     const selector = document.getElementById("listSelector");
     selector.innerHTML = "";
 
-    // Add personal lists
+    //personal lists
     if (data.personal_lists && data.personal_lists.length > 0) {
         const personalGroup = document.createElement("optgroup");
         personalGroup.label = "My Personal Lists";
@@ -507,7 +507,7 @@ function showListSelector(data) {
         selector.appendChild(personalGroup);
     }
 
-    // Add owned collaborative lists
+    //owned collaborative lists
     if (data.owned_collab_lists && data.owned_collab_lists.length > 0) {
         const ownedGroup = document.createElement("optgroup");
         ownedGroup.label = "My Collaborative Lists";
@@ -522,7 +522,7 @@ function showListSelector(data) {
         selector.appendChild(ownedGroup);
     }
 
-    // Add lists where user is a member
+    //lists where user is a member
     if (data.member_collab_lists && data.member_collab_lists.length > 0) {
         const memberGroup = document.createElement("optgroup");
         memberGroup.label = "Shared With Me";
@@ -688,7 +688,7 @@ async function openMembersModal() {
     await loadMembers();
 }
 
-// Load members of current list
+//load members of current list
 async function loadMembers() {
     const memberList = document.getElementById("memberList");
     memberList.innerHTML = '<p style="text-align: center; color: #999;">Loading members...</p>';
