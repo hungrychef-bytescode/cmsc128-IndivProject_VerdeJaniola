@@ -4,17 +4,17 @@ from database import Lists, CollabMembers
 
 # decorator - modify functions without changing its code
 
-def login_required(f):
-    @wraps(f)
+def login_required(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         if session.get("user_id"):
-            return f(*args, **kwargs)
+            return func(*args, **kwargs)
         else:
             return jsonify({"message": "Authentication required"})
     return wrapper
 
-def list_access(f):
-    @wraps(f)
+def list_access(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         user_id = session.get("user_id")
         list_id = session.get("active_list")
@@ -24,7 +24,7 @@ def list_access(f):
             collab = CollabMembers.query.filter_by(list_id=list_id, member_id=user_id).first()
 
             if owns or collab:
-                return f(*args, **kwargs)
+                return func(*args, **kwargs)
             else:
                 return jsonify({"message": "List access denied"})
 

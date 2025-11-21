@@ -4,7 +4,6 @@ from crud import read, create, delete, read_sort, update
 from decorator import login_required, list_access
 
 task_app = Blueprint("task", __name__)
-# app = Flask(__name__)
 
 @task_app.route("/index")
 @login_required

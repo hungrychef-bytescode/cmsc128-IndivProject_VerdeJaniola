@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, session
-from account import Users
+# from account import Users
 from decorator import login_required, list_access
-from database import database, Lists, CollabMembers
+from database import database, Lists, CollabMembers, Users
 
 collab_app = Blueprint("collab", __name__)
 
@@ -35,16 +35,16 @@ def add_member():
             "message": "List ID and username/email are required"
         })
     
-    list_item = Lists.query.get(list_id)
+    list_details = Lists.query.get(list_id)
     
     # Only owner can add members
-    if list_item.owner_id != current_user_id:
+    if list_details.owner_id != current_user_id:
         return jsonify({
             "success": False,
             "message": "Only the list owner can add members"
         })
     
-    if not list_item.is_collab:
+    if not list_details.is_collab:
         return jsonify({
             "success": False,
             "message": "Cannot add members to a personal list"
@@ -87,7 +87,7 @@ def add_member():
     
     return jsonify({
         "success": True,
-        "message": f"Successfully added {user_to_add.username} to {list_item.name}"
+        "message": f"Successfully added {user_to_add.username} to {list_details.name}"
     })
 
 

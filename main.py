@@ -1,9 +1,9 @@
-from flask import Flask, make_response
-from account import account_app, Config, mail, security, Users
-from flask_security import SQLAlchemyUserDatastore
+from flask import Flask
+from account import account_app, Config, mail, security
+from flask_security import SQLAlchemySessionUserDatastore
 from collab import collab_app
-from db import init_db
-from database import database
+# from db import init_db
+from database import database, Users
 from task import task_app
 
 # initialize flask app
@@ -18,15 +18,15 @@ def after_request(response):
 
 database.init_app(todo_app)
 mail.init_app(todo_app)
-user_datastore = SQLAlchemyUserDatastore(database, Users, None)
+user_datastore = SQLAlchemySessionUserDatastore(database.session, Users, None)
 security.init_app(todo_app, user_datastore, login_form = None, register_form = None )
 
 # Register all blueprints so their routes become part of this app
+# used blueprints to organize and manage the separate/modularized account.py and task.py
 todo_app.register_blueprint(account_app)
 todo_app.register_blueprint(task_app)
 todo_app.register_blueprint(collab_app)
-init_db(todo_app)
-
+# init_db(todo_app)
 
 if __name__ == "__main__":
     with todo_app.app_context():

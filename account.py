@@ -1,50 +1,9 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
-from flask_security import UserMixin, Security
-from database import database, Lists
-from flask_mail import Mail
+from database import database, Lists, Users
 from flask_security.utils import hash_password, verify_and_update_password
 import uuid
-from dotenv import load_dotenv
-import os
-
-# Load .env file
-load_dotenv()
 
 account_app = Blueprint("account", __name__)
-
-class Config:
-   SQLALCHEMY_DATABASE_URI = "sqlite:///database.db"
-   SECRET_KEY = os.getenv("SECRET_KEY")
-   
-    # flask security configurations
-    #enable password recovery features
-   SECURITY_RECOVERABLE = True
-   SECURITY_REGISTERABLE = False
-   SECURITY_PASSWORD_HASH = "pbkdf2_sha512"
-   SECURITY_RESET_PASSWORD_WITHIN = "5 minutes"
-   SECURITY_EMAIL_SENDER = os.getenv("SECURITY_EMAIL_SENDER")
-   SECURITY_PASSWORD_SALT = os.getenv("SECURITY_PASSWORD_SALT")
-
-   MAIL_SERVER = "smtp.gmail.com"        #specify the gmail smtp server
-   MAIL_PORT = 587                       #standart port number for TLS-encrypted emails (port to connect to smtp server)
-   MAIL_USE_TLS = True                   #Transport Layer Security - protects email content&credentials between app and gmail
-   MAIL_USERNAME = os.getenv("MAIL_USERNAME")
-   MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")  #app password generated
-
-   SECURITY_POST_RESET_VIEW = "/user_login"
-
-mail = Mail()
-security = Security()
-
-# table for users
-class Users(database.Model, UserMixin):
-    id = database.Column (database.Integer, primary_key = True)
-    full_name = database.Column(database.String(100), nullable = False)
-    email = database.Column (database.String(100), nullable = False, unique = True)
-    username = database.Column (database.String(100), nullable = False, unique = True)
-    password = database.Column (database.String(100), nullable = False)
-    active = database.Column(database.Boolean())
-    fs_uniquifier = database.Column(database.String(255), unique=True, nullable=False)
 
 # main page when development server is opened
 @account_app.route("/")
@@ -275,11 +234,3 @@ def signup():
         "success": True,
         "message": "Account Successfully Created"
     })
-
-# if this file is run directly:
-# if __name__ == "__main__":
-#     # create the tables if they dont exist yet
-#     with account_app.app_context():
-#         database.create_all()
-#     # start the flask development server
-#     account_app.run(debug = True)
