@@ -20,7 +20,6 @@ if (backBtn) {
     )
 }
 
-
 if (passwordForm) {
     passwordForm.addEventListener("submit", async function(event) {
         event.preventDefault();
@@ -224,7 +223,6 @@ if (logoutBtn) {
         });
     });
 }
-
 
 function showToast(message, duration = 2000) {
     const toast = document.createElement("div");

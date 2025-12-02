@@ -1,10 +1,9 @@
 from flask import (Blueprint, render_template, send_from_directory, 
                    request, jsonify, session)
-from crud import read, create, delete, read_sort, update
 from decorator import login_required, list_access
+from database import database, Tasks
 
 task_app = Blueprint("task", __name__)
-# app = Flask(__name__)
 
 @task_app.route("/index")
 @login_required
@@ -76,7 +75,19 @@ def delete_task(id):
 @login_required
 @list_access
 def update_task(id):
-        task = request.get_json().get("task")
+        task_input = request.get_json().get("task")
+        task_id = Tasks.query.get(id)
+        
+        try:
+            if task:
+                task_id.task = status
+                database.session.commit()
+            else:
+                return jsonify({"error": "Task not found"}), 404
+             
+        except Exception as e:
+            print("Error updating status:", e)
+            return jsonify({"error": "Failed to update status"}), 500
         if task is None:
             return jsonify({"error": "Missing task"})
         result = update.update_task(id, task)
@@ -87,31 +98,52 @@ def update_task(id):
 @list_access
 def update_task_status(id):
         status = request.get_json().get("status")
-        if status is None:
-            return jsonify({"error": "Missing status"})
-        result= update.update_status(id, status)
-        return jsonify(result)
+        task = Tasks.query.get(id)
+
+        try:
+            if task:
+                task.status = status
+                database.session.commit()
+            else:
+                return jsonify({"error": "Task not found"}), 404
+             
+        except Exception as e:
+            print("Error updating status:", e)
+            return jsonify({"error": "Failed to update status"}), 500
 
 @task_app.route("/tasks/<int:id>/due_date", methods=["PUT"])
 @login_required
 @list_access
 def update_task_due_date(id):
         due_date = request.get_json().get("due_date")
-        if due_date is None:
-            return jsonify({"error": "Missing due date"})
-        result = update.update_due_date(id, due_date)
-        return jsonify(result)
+        task = Tasks.query.get(id)
+
+        try:
+            if task:
+                task.due_date = due_date
+                database.session.commit()
+            else:
+                return jsonify({"error": "Task not found"}), 404
+             
+        except Exception as e:
+            print("Error updating due date:", e)
+            return jsonify({"error": "Failed to update priority"}), 500
 
 @task_app.route("/tasks/<int:id>/priority", methods=["PUT"])
 @login_required
 @list_access
 def update_task_priority(id):
         priority = request.get_json().get("priority")
-        if priority is None:
-            return jsonify({"error": "Missing priority"})
-        result = update.update_priority(id, priority)
-        return jsonify(result)
+        task = Tasks.query.get(id)
 
-# if __name__ == "__main__":
-#     init_db(app)
-#     app.run(debug=True)
+        try:
+            if task:
+                task.priority = priority
+                database.session.commit()
+            else:
+                return jsonify({"error": "Task not found"}), 404
+             
+        except Exception as e:
+            print("Error updating priority:", e)
+            return jsonify({"error": "Failed to update priority"}), 500
+        

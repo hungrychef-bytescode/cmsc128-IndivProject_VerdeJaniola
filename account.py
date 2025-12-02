@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
-from flask_security import UserMixin, Security
+from flask_security import Security
 from database import database, Lists
 from flask_mail import Mail
 from flask_security.utils import hash_password, verify_and_update_password
@@ -12,6 +12,7 @@ load_dotenv()
 
 account_app = Blueprint("account", __name__)
 
+# separate class for configuration settings
 class Config:
    SQLALCHEMY_DATABASE_URI = "sqlite:///database.db"
    SECRET_KEY = os.getenv("SECRET_KEY")
@@ -35,16 +36,6 @@ class Config:
 
 mail = Mail()
 security = Security()
-
-# table for users
-class Users(database.Model, UserMixin):
-    id = database.Column (database.Integer, primary_key = True)
-    full_name = database.Column(database.String(100), nullable = False)
-    email = database.Column (database.String(100), nullable = False, unique = True)
-    username = database.Column (database.String(100), nullable = False, unique = True)
-    password = database.Column (database.String(100), nullable = False)
-    active = database.Column(database.Boolean())
-    fs_uniquifier = database.Column(database.String(255), unique=True, nullable=False)
 
 # main page when development server is opened
 @account_app.route("/")
@@ -275,11 +266,3 @@ def signup():
         "success": True,
         "message": "Account Successfully Created"
     })
-
-# if this file is run directly:
-# if __name__ == "__main__":
-#     # create the tables if they dont exist yet
-#     with account_app.app_context():
-#         database.create_all()
-#     # start the flask development server
-#     account_app.run(debug = True)
