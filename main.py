@@ -31,3 +31,8 @@ if __name__ == "__main__":
     with todo_app.app_context():
         database.create_all()
     todo_app.run(debug = True)
+
+# fix collabMembers list to array instead of another table
+# fix collabMembers logic in collab.py
+# fix JS scripts, move css to css file
+# 

@@ -5,6 +5,22 @@ from database import database, Tasks
 
 task_app = Blueprint("task", __name__)
 
+
+def format_task(task):
+    return {
+        "id": task["id"],
+        "task": task["task"],
+        "timestamp": task["timestamp"],
+        "priority": task["priority"],
+        "status": task["status"],
+        "due_date": task["due_date"]
+    }
+
+def format_tasks(tasks):
+    return [format_task(task) for task in tasks]
+
+
+
 @task_app.route("/index")
 @login_required
 @list_access
@@ -75,75 +91,57 @@ def delete_task(id):
 @login_required
 @list_access
 def update_task(id):
-        task_input = request.get_json().get("task")
-        task_id = Tasks.query.get(id)
-        
-        try:
-            if task:
-                task_id.task = status
-                database.session.commit()
-            else:
-                return jsonify({"error": "Task not found"}), 404
-             
-        except Exception as e:
-            print("Error updating status:", e)
-            return jsonify({"error": "Failed to update status"}), 500
-        if task is None:
-            return jsonify({"error": "Missing task"})
-        result = update.update_task(id, task)
-        return jsonify(result)
+    task_input = request.get_json().get("task")
+    task_id = Tasks.query.get(id)
+
+    if task_id:
+        task_id.task = task_input
+        database.session.commit()
+        return jsonify({"success": True})
+    else:
+        return jsonify({ "error": "Task not found" }), 404
 
 @task_app.route("/tasks/<int:id>/status", methods=["PUT"])
 @login_required
 @list_access
 def update_task_status(id):
-        status = request.get_json().get("status")
-        task = Tasks.query.get(id)
+    status = request.get_json().get("status")
+    task = Tasks.query.get(id)
 
-        try:
-            if task:
-                task.status = status
-                database.session.commit()
-            else:
-                return jsonify({"error": "Task not found"}), 404
-             
-        except Exception as e:
-            print("Error updating status:", e)
-            return jsonify({"error": "Failed to update status"}), 500
+    if task:
+        task.status = status
+        database.session.commit()
+        return jsonify({"success": True})
+    else:
+        return jsonify({"error": "Task not found"}), 404
 
 @task_app.route("/tasks/<int:id>/due_date", methods=["PUT"])
 @login_required
 @list_access
 def update_task_due_date(id):
-        due_date = request.get_json().get("due_date")
-        task = Tasks.query.get(id)
+    due_date = request.get_json().get("due_date")
+    task = Tasks.query.get(id)
 
-        try:
-            if task:
-                task.due_date = due_date
-                database.session.commit()
-            else:
-                return jsonify({"error": "Task not found"}), 404
-             
-        except Exception as e:
-            print("Error updating due date:", e)
-            return jsonify({"error": "Failed to update priority"}), 500
+    if task:
+        task.due_date = due_date
+        database.session.commit()
+        return jsonify({"success": True})
+    else:
+        return jsonify({"error": "Task not found"}), 404
 
 @task_app.route("/tasks/<int:id>/priority", methods=["PUT"])
 @login_required
 @list_access
 def update_task_priority(id):
-        priority = request.get_json().get("priority")
-        task = Tasks.query.get(id)
+    priority = request.get_json().get("priority")
+    task = Tasks.query.get(id)
 
-        try:
-            if task:
-                task.priority = priority
-                database.session.commit()
-            else:
-                return jsonify({"error": "Task not found"}), 404
-             
-        except Exception as e:
-            print("Error updating priority:", e)
-            return jsonify({"error": "Failed to update priority"}), 500
-        
+    if task:
+        task.priority = priority
+        database.session.commit()                
+        return jsonify({"success": True})
+    else:
+        return jsonify({
+            "success": False,
+            "message": "Failed to update priority."
+        })
