@@ -1,8 +1,28 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import UserMixin
+from sqlalchemy.types import TypeDecorator, Text
+import json
 
 database = SQLAlchemy()
 
+
+# store and gets list of collaborators as JSON in DB
+class CollaboratorList(TypeDecorator):
+    impl = Text
+    
+    def process_bind_param(self, value, dialect):
+        if value is None:
+            return None
+        return json.dumps(value) 
+
+    def process_result_value(self, value, dialect):
+        if value is None:
+            return []  
+        try:
+            return json.loads(value)
+        except (TypeError, json.JSONDecodeError):
+            return []
+        
 # table for users
 class Users(database.Model, UserMixin):
     id = database.Column (database.Integer, primary_key = True)
@@ -30,8 +50,4 @@ class Lists(database.Model):
     is_collab = database.Column(database.Boolean, default = False)
     owner_id = database.Column(database.Integer,  database.ForeignKey("users.id"), nullable = False)
 
-# !!!make this a column array
-class CollabMembers(database.Model):
-    id = database.Column(database.Integer, primary_key = True)
-    list_id = database.Column(database.Integer,  database.ForeignKey("lists.id"), nullable = False)
-    member_id = database.Column(database.Integer,  database.ForeignKey("users.id"), nullable = False)
+    member_ids = database.Column(CollaboratorList, default=[])

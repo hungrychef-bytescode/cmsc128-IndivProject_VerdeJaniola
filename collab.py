@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, session
 from decorator import login_required, list_access
-from database import database, Lists, CollabMembers, Users
+from database import database, Lists, Users
 
 collab_app = Blueprint("collab", __name__)
 
@@ -30,58 +30,43 @@ def add_member():
     
     if not list_id or not username_or_email:
         return jsonify({
-            "success": False,
+            "success": False, 
             "message": "List ID and username/email are required"
-        })
+            })
     
     list_details = Lists.query.get(list_id)
     
-    # Only owner can add members
-    if list_details.owner_id != current_user_id:
+    if not list_details or list_details.owner_id != current_user_id or not list_details.is_collab:
+        # Combined check for non-existent list, not owner, or not collab list
         return jsonify({
-            "success": False,
-            "message": "Only the list owner can add members"
-        })
+            "success": False, 
+            "message": "Access denied or list is not collaborative"
+            })
     
-    if not list_details.is_collab:
-        return jsonify({
-            "success": False,
-            "message": "Cannot add members to a personal list"
-        })
-    
-    # Find the user to add
     user_to_add = Users.query.filter(
         (Users.username == username_or_email) | (Users.email == username_or_email)
     ).first()
     
     if not user_to_add:
-        return jsonify({
-            "success": False,
-            "message": "User not found"
-        })
+        return jsonify({"success": False, "message": "User not found"})
     
-    # Can't add yourself
     if user_to_add.id == current_user_id:
         return jsonify({
-            "success": False,
+            "success": False, 
             "message": "You cannot add yourself to the list"
         })
+
+    member_id = user_to_add.id
     
     # Check if already a member
-    existing_member = CollabMembers.query.filter_by(
-        list_id=list_id,
-        member_id=user_to_add.id
-    ).first()
-    
-    if existing_member:
+    if member_id in list_details.member_ids:
         return jsonify({
             "success": False,
             "message": f"{user_to_add.username} is already a member of this list"
         })
     
-    # Add the member
-    new_member = CollabMembers(list_id=list_id, member_id=user_to_add.id)
-    database.session.add(new_member)
+    list_details.member_ids.append(member_id)
+    # database.session.add(list_details)
     database.session.commit()
     
     return jsonify({
@@ -105,9 +90,10 @@ def view_lists():
     
     #format owned lists info
     owned_lists_data = []
+
     for lst in owned_collab_lists:
-        members = CollabMembers.query.filter_by(list_id=lst.id).all()
-        member_usernames = [Users.query.get(m.member_id).username for m in members]
+        member_ids = lst.member_ids
+        member_usernames = [Users.query.get(m).username for m in member_ids if m != lst.owner_id]
         
         owned_lists_data.append({
             "id": lst.id,
@@ -117,26 +103,21 @@ def view_lists():
             "member_count": len(member_usernames)
         })
 
-    # Get lists where user is a member
-    member_records = CollabMembers.query.filter_by(member_id=current_user_id).all()
-    member_list_ids = [record.list_id for record in member_records]
-    member_collab_lists = Lists.query.filter(Lists.id.in_(member_list_ids)).all()
-
-    
-    #format list info where user is added as collaborator
+    all_collab_lists = Lists.query.filter_by(is_collab=True).all()
     member_lists_data = []
-
-    for lst in member_collab_lists:
-        members = CollabMembers.query.filter_by(list_id=lst.id).all()
-        member_usernames = [Users.query.get(m.member_id).username for m in members]
-        
-        member_lists_data.append({
-            "id": lst.id,
-            "name": lst.name,
-            "is_owner": False,
-            "owner": Users.query.get(lst.owner_id).username,
-            "members": member_usernames,
-        })
+    
+    for lst in all_collab_lists:
+        if current_user_id in lst.member_ids and lst.owner_id != current_user_id:
+            member_ids = lst.member_ids
+            member_usernames = [Users.query.get(m).username for m in member_ids if m != lst.owner_id]
+            
+            member_lists_data.append({
+                "id": lst.id,
+                "name": lst.name,
+                "is_owner": False,
+                "owner": Users.query.get(lst.owner_id).username,
+                "members": member_usernames,
+            })
     
     #get personal lists
     personal_lists = Lists.query.filter_by(
@@ -179,7 +160,7 @@ def create_list():
         })
     
     # Create the new list
-    new_list = Lists(name=list_name, is_collab=is_collab, owner_id=current_user_id)
+    new_list = Lists(name=list_name, is_collab=is_collab, owner_id=current_user_id, member_ids=[])
     database.session.add(new_list)
     database.session.commit()
 

@@ -143,8 +143,6 @@ def update_task_status(id):
             "message": "Failed to update status."
         })
 
-
-
 @task_app.route("/tasks/<int:id>/due_date", methods=["PUT"])
 @login_required
 @list_access
@@ -164,7 +162,6 @@ def update_task_due_date(id):
             "success": False,
             "message": "Failed to update due date."
         })
-
     
 @task_app.route("/tasks/<int:id>/priority", methods=["PUT"])
 @login_required
