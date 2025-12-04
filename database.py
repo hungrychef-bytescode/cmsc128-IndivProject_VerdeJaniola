@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_security import UserMixin
 
 database = SQLAlchemy()
 
@@ -34,4 +35,3 @@ class CollabMembers(database.Model):
     id = database.Column(database.Integer, primary_key = True)
     list_id = database.Column(database.Integer,  database.ForeignKey("lists.id"), nullable = False)
     member_id = database.Column(database.Integer,  database.ForeignKey("users.id"), nullable = False)
-

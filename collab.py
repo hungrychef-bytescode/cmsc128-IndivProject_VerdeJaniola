@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify, session
-from account import Users
 from decorator import login_required, list_access
-from database import database, Lists, CollabMembers
+from database import database, Lists, CollabMembers, Users
 
 collab_app = Blueprint("collab", __name__)
 
