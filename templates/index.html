@@ -14,16 +14,11 @@
     </head>
 
     <body>    
+    <div class="page-wrapper">    
         <h6></h6>        
         <h1>TO DO LIST: <span class="current-list-name" id="currentListName">My Tasks</span></h1>            
         <!-- <h2>NAME: Angel May Janiola & Myra Verde</h2> 
         <h3>SUBJECT: CMSC 128-1 Lab 1</h3> -->
-
-        <img src="/my_images/iloveu.png" alt="Computer" class=iloveu>
-        <img src="/my_images/cool.png" alt="Computer" class=cool>
-        <img src="/my_images/goodjob.png" alt="Computer" class=goodjob>
-        <img src="/my_images/hellokitty.png" alt="Computer" class=hellokitty>
-        <img src="/my_images/miaw.png" alt="Computer" class=miaw>
 
 
         <button id = "view-profile">
@@ -31,12 +26,13 @@
             Profile
         </button>
 
+        <div class="top-group-container">
         <div class="collab-controls">
             <select class="list-selector" id="listSelector" onchange="switchListFromSelector()">
                 <option value="">Loading lists...</option>
             </select>
             <button class="collab-btn primary" onclick="openCreateListModal()">+ New List</button>
-            <button class="collab-btn primary" onclick="openMembersModal()">👥 Members</button>
+            <button class="collab-btn primary" onclick="openMembersModal()">Members</button>
         </div>
 
         <!-- Input Section -->
@@ -55,12 +51,17 @@
 
         <!-- Sort Section -->
         <div class="sort-container">
+            <center>
+            <center>
             <label>Sort by:</label>
             <select id="sortBy">
                 <option value="timestamp">Date Added</option>
                 <option value="priority">Priority</option>
                 <option value="due_date">Due Date</option>
             </select>
+            </center>
+        </div>
+        </center>
         </div>
 
         <ul id="task-list"></ul>
@@ -109,5 +110,6 @@
 
         <button type = "button" id = "log-out-btn">Log Out</button>
 
-    </body>
+        </div> <!-- END page-wrapper -->
+</body>
 </html>
