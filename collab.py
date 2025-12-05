@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, session
 from decorator import login_required, list_access
 from database import database, Lists, Users
+from sqlalchemy.orm.attributes import flag_modified
 
 collab_app = Blueprint("collab", __name__)
 
@@ -67,6 +68,7 @@ def add_member():
     
     list_details.member_ids.append(member_id)
     # database.session.add(list_details)
+    flag_modified(list_details, "member_ids")
     database.session.commit()
     
     return jsonify({
