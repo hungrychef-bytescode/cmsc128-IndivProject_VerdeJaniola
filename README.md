@@ -1,5 +1,7 @@
 # cmsc128-IndivProject_VerdeJaniola
 
+deployment link: https://hungrychefbytes.pythonanywhere.com/
+
 Activity 1 TODO LIST
 
 BACKEND:
